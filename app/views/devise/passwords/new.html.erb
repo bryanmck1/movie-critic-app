@@ -1,0 +1,24 @@
+<div id="pageContainer" class="min-h-screen flex flex-col justify-center items-center">
+
+  <div id="passwordReset" class="flex flex-col justify-center items-center p-5 w-4/5 max-w-md">
+  
+  <h2 class="mb-5 font-semibold text-lg">Password Recovery</h2>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field mb-1">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email Address", class: "rounded-md" %>
+    </div>
+    <div class="actions flex items-center justify-around mt-4">
+      <button class="bg-blue-500 hover:bg-blue-700 w-full mb-5 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <%= f.submit "Submit" %>
+      </button>
+    </div>
+  <% end %>
+
+  <%- if controller_name != 'sessions' %>
+    <%= link_to "Sign In", new_session_path(resource_name), class: "text-blue-600 hover:text-blue-700" %><br />
+  <% end %>
+  </div>
+
+</div>

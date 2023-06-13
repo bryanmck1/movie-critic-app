@@ -1,0 +1,39 @@
+<div id="pageContainer" class="min-h-screen flex flex-col justify-center items-center">
+
+  <h1 class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium mb-10" >The Movie Critic</h1>
+
+  <div id="signInForm" class="flex flex-col justify-center items-center border-2 border-slate-300 rounded-lg p-5 w-4/5 max-w-xs">
+    <h5 class="text-xl lg:text-2xl mb-5">Sign In</h5>
+    <div id="form">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field">
+          <%= f.text_field :username, class: "shadow appearance-none border rounded my-3 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" ,autofocus: true, autocomplete: "username", placeholder: "Username" %>
+        </div>
+        <div class="field">
+          <%= f.password_field :password, autocomplete: "current-password", class: "my-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Password" %>
+        </div>
+        <% if devise_mapping.rememberable? %>
+          <div class="field">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end %>
+        <div class="actions flex items-center justify-around mt-4">
+          <%= f.submit "Submit", class: "w-full bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <%= link_to "Forgot your password?", new_password_path(resource_name), class: "my-3 text-blue-600 hover:text-blue-700" %><br />
+  <% end %>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <div id="createAccount" class="flex flex-col justify-center items-center bg-slate-200 rounded-lg text-lg lg:text-xl p-5 w-4/5 max-w-xs">
+      <h4 class="text-2xl font-normal break-words text-center" >Create An <br> Account Today!</h4>
+        <%= link_to "Sign up", new_registration_path(resource_name), class: "text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-normal m-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    </div>
+  <% end %>
+
+</div>
