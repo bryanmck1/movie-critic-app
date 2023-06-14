@@ -2,4 +2,11 @@
 
   <%= render partial: 'devise/shared/navbar'%>
 
+  <% if session[:access_denied_message] %>
+    <div class="alert alert-danger">
+      <%= session[:access_denied_message] %>
+    </div>
+  <% session.delete(:access_denied_message) %>
+  <% end %>
+
 </div> 
