@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :authorize_user, only: [:show]
 
   def show
+    puts current_user.role 
     if flash.now[:access_denied].present?
       flash.now[:access_denied] = flash.now[:access_denied]
       redirect_to user_path(current_user)

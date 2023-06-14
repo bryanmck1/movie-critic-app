@@ -3,9 +3,10 @@
   <span class="">The Movie Critic</span>
   
   <div class="hidden md:flex">
-   <span class="m-3" >Movie Reviews</span> <br>
+   <span class="m-3" >Movie Reviews1</span> <br>
+
    <% if user_signed_in? && current_user.role == "admin"%>
-   <span class="m-3">New Review</span> <br>
+     <span class="m-3">New Review</span> <br>
    <% end %>
    <span class="account-menu m-3 hover:cursor-pointer">Profile</span> <br>
    <div class="profile hidden absolute bg-white border-2 border-gray-300 top-16 right-8">
