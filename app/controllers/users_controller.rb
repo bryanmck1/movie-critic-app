@@ -13,6 +13,10 @@ class UsersController < ApplicationController
   def index
   end
 
+  def edit 
+    
+  end
+
   private
 
   def authorize_user
