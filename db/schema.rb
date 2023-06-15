@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_141429) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_144353) do
+  create_table "reviews", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "movie_poster"
+    t.string "movie_title"
+    t.string "director"
+    t.string "writer"
+    t.string "genre"
+    t.string "runtime"
+    t.string "awards"
+    t.string "rating"
+    t.string "plot_summary"
+    t.integer "review_score"
+    t.string "review_summary"
+    t.integer "release_year"
+    t.json "actors", default: []
+    t.string "imdb_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

@@ -4,18 +4,53 @@
 
   <div class="w-full flex flex-col items-center">
   
-  <div id="form" class="mt-5 w-full flex items-center">
-    <%= form_with url: new_review_path, class:"w-full flex justify-center", method: :get do |form| %>
-      <%= form.text_field :movie_query, class: "text-sm rounded w-11/12 max-w-md lg:max-w-lg", placeholder: "Search Movie, Title, Director, Writer, Actors" %>
-      <button class="hidden md:inline w-32 ml-5 mr-3 text-sm bg-blue-600 border-2 border-blue-600 hover:bg-white text-white hover:text-blue-600 font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-       <%= form.submit 'Search' %>
-      </button>
-      <button class="hidden md:inline w-32 text-sm text-blue-500 border-2 border-blue-500 hover:bg-blue-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Reset search
-      </button>
-    <% end %>
-    
-  </div>
-  
+    <div id="form" class="mt-5 w-full flex items-center">
+      <%= form_with url: new_review_path, class:"w-full flex justify-center", method: :get do |form| %>
+        <%= form.text_field :movie_query, class: "text-sm rounded w-11/12 max-w-md lg:max-w-lg", placeholder: "Search Movie, Title, Director, Writer, Actors" %>
+        <button class="hidden md:inline w-32 ml-5 mr-3 text-sm bg-blue-600 border-2 border-blue-600 hover:bg-white text-white hover:text-blue-600 font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <%= form.submit 'Search' %>
+        </button>
+        <button class="hidden md:inline w-32 text-sm text-blue-500 border-2 border-blue-500 hover:bg-blue-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Reset search
+        </button>
+        <% if current_user.role == "admin"%>
+        <button class="ml-3 hidden md:inline w-32 text-sm bg-green-600 text-white border-2 border-green-600 hover:bg-white hover:text-green-600 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          New Review 
+        </button>
+        <% end %>
+      <% end %>   
+    </div>
+
+    <div id="results" class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+      <% if @reviews.any? %>
+        <% @reviews.each do |review| %>
+          <div id="individualMovieContainer" class="flex flex-col items-center">
+            <div class="h-full p-3 w-60 flex flex-col justify-between items-center rounded-lg shadow-md">
+              <% if review.movie_poster == 'N/A'%>
+                <a href="#"><img src="/noimg.png" alt="No image" class="w-full h-60 object-contain rounded-t-lg"></a>
+              <% else %>
+                <a href="#"><img src="<%= review.movie_poster %>" alt="No poster available" class="w-full h-60 object-contain rounded-t-lg"></a>
+              <% end %>      
+              <div class="font-semibold text-base text-center mb-2">
+                <%= review.movie_title %>
+              </div>
+              <div class="text-sm text-center mb-2">
+                <%= "#{review.review_score} / 10"%>
+              </div>
+              <% if current_user.role == "admin"%>
+                <div class="flex justify-center w-full">
+                  <button class="w-20 mx-3 text-xs text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Edit 
+                  </button>
+                  <button class="w-20 mx-3 text-xs text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Delete 
+                  </button>
+                </div>           
+              <% end %>          
+            </div>
+          </div>       
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
