@@ -1,0 +1,45 @@
+<div id="pageContainer" class="min-h-screen flex flex-col items-center">
+
+  <%= render partial: 'devise/shared/navbar'%>
+
+  <div class="mt-10 flex flex-col w-4/5 justify-center items-center">
+    <h3 class="font-bold text-lg w-4/5 text-center">What movie would you like to review?</h3>
+
+    <%= form_with url: new_review_path, class:"w-full flex justify-center md:inline max-w-sm", method: :get do |form| %>
+      <%= form.text_field :movie_query, class: "mt-6 rounded", placeholder: "Search Movie, Title, Director, Writer, Actors" %>
+      <button class="hidden md:inline bg-blue-600 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+       <%= form.submit 'Search' %>
+
+      </button>
+    <% end %>
+
+  </div>
+
+  <div id="results" class="mt-12 w-11/12 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+  <% if @results.present? %>
+    <% @results.each do |result| %>
+      <div id="individualMovieContainer" class="flex flex-col items-center">
+        <div class="h-full w-44 flex flex-col justify-between rounded-lg shadow-md">
+          <% if result['Poster'] == 'N/A'%>
+            <img src="/noimg.png" alt="No image" class="w-full h-48 object-contain rounded-t-lg">
+          <% else %>
+            <img src="<%= result['Poster'] %>" alt="No poster available" class="w-full h-48 object-contain rounded-t-lg">
+          <% end %>
+          
+          <div class="p-4 flex flex-col items-center">
+            <div class="font-semibold text-sm text-center mb-2">
+              <%= result['Title'] %>
+            </div>
+            <button class="hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white hover:border-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <%= link_to 'Review', '#' %>
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+
+  
+</div>

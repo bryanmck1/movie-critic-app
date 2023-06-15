@@ -10,7 +10,7 @@
    <% end %>
    <span class="account-menu m-3 hover:cursor-pointer">Profile</span> <br>
    <div class="profile hidden absolute bg-white border-2 border-gray-300 top-16 right-8">
-   <span class="m-5 hover:cursor-pointer">Account</span><br>
+   <%= link_to "Account", user_path(current_user), class: "m-5 hover:cursor-pointer" %><br>
    <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to log out?'}, class: "m-5 text-red-500" %>
 
    </div>
@@ -19,9 +19,10 @@
   <div class="navbar-menu hidden absolute border-2 border-gray-300 bg-white md:hidden top-12 right-10 overflow-visible">
    <span class="m-8" >Movie Reviews</span> <br>
    <% if user_signed_in? && current_user.role == "admin"%>
-   <span class="m-8">New Review</span> <br>
+     <%= link_to 'New review', new_review_path, class: "m-8 hover:cursor-pointer" %> <br>
    <% end %>
-   <span class="m-8">Profile</span> <br>
+   <%= link_to "Account", user_path(current_user), class: "m-8 hover:cursor-pointer" %><br>
+
    <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to log out?'}, class: "m-8 text-red-500" %>
   </div>
   <button class="hamburger-menu focus:outline-none md:hidden">
