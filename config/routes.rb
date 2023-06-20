@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:show, :edit, :update]
-  resources :reviews, only: [:index, :new]
+  resources :reviews, only: [:index, :new, :show, :create]
+  resources :movies, only: [:new]
 end

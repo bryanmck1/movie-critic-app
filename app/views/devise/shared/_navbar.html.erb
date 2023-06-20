@@ -1,34 +1,27 @@
 <nav class="w-full flex items-center justify-between p-4 overscroll-none border-b-2 border-gray-500">
-
-  <span class="">The Movie Critic</span>
-  
+  <%= link_to image_tag("https://i.ibb.co/4Jv3SY7/Movie-App-Logo-1.png"), reviews_path, class:"w-36 lg:w-48 max-w-sm" %>
   <div class="hidden md:flex">
-   <span class="m-3" >Movie Reviews</span> <br>
-
-   <% if user_signed_in? && current_user.role == "admin"%>
-     <span class="m-3">New Review</span> <br>
-   <% end %>
-   <span class="account-menu m-3 hover:cursor-pointer">Profile</span> <br>
-   <div class="profile hidden absolute bg-white border-2 border-gray-300 top-16 right-8">
-   <%= link_to "Account", user_path(current_user), class: "m-5 hover:cursor-pointer" %><br>
-   <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to log out?'}, class: "m-5 text-red-500" %>
-
-   </div>
+    <%= link_to 'Movie Reviews', reviews_path, class:"m-3" %><br>
+     <% if user_signed_in? && current_user.role == "admin"%>
+       <%= link_to 'New Review', new_movie_path, class:"m-3"%> <br>
+     <% end %>
+     <button id="account-menu" class="m-3 hover:cursor-pointer">Profile</button>
+    <div class="profile hidden absolute bg-white border-2 border-gray-300 top-16 right-8">
+      <%= link_to "Account", user_path(current_user), class: "m-5 hover:cursor-pointer" %><br>
+      <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to log out?'}, class: "m-5 text-red-500" %>
+    </div>
   </div>
-  
   <div class="navbar-menu hidden absolute border-2 border-gray-300 bg-white md:hidden top-12 right-10 overflow-visible">
-   <span class="m-8" >Movie Reviews</span> <br>
-   <% if user_signed_in? && current_user.role == "admin"%>
-     <%= link_to 'New review', new_review_path, class: "m-8 hover:cursor-pointer" %> <br>
-   <% end %>
-   <%= link_to "Account", user_path(current_user), class: "m-8 hover:cursor-pointer" %><br>
-
-   <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to log out?'}, class: "m-8 text-red-500" %>
+    <%= link_to 'Movie Reviews', reviews_path, class:"m-8" %><br>
+    <% if user_signed_in? && current_user.role == "admin"%>
+      <%= link_to 'New review', new_movie_path, class: "m-8" %> <br>
+    <% end %>
+    <%= link_to "Account", user_path(current_user), class: "m-8 hover:cursor-pointer" %><br>
+    <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to log out?'}, class: "m-8 text-red-500" %>
   </div>
   <button class="hamburger-menu focus:outline-none md:hidden">
     <span class="hamburger-menu__icon block w-6 h-1 bg-gray-900 rounded"></span>
     <span class="hamburger-menu__icon block w-6 h-1 bg-gray-900 rounded mt-1"></span>
     <span class="hamburger-menu__icon block w-6 h-1 bg-gray-900 rounded mt-1"></span>
   </button>
-
 </nav>

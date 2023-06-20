@@ -1,0 +1,5 @@
+Things to fix:
+  Allow logged in user to reset password
+  Display a better message when user requests password reset
+  Fix the Profile button in the nav bar not having an event listener attached to it after going to a new page
+  

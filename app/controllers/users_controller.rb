@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :authorize_user, only: [:show]
 
   def show
-    puts current_user.role 
     if flash.now[:access_denied].present?
       flash.now[:access_denied] = flash.now[:access_denied]
       redirect_to user_path(current_user)
@@ -13,8 +12,12 @@ class UsersController < ApplicationController
   def index
   end
 
-  def edit 
-    
+  def reset_password
+    @user = User.find(params[:email])
+    @user.send_reset_password_instructions
+  end
+
+  def edit     
   end
 
   private
@@ -26,5 +29,4 @@ class UsersController < ApplicationController
       redirect_to root_path
     end
   end
-
 end

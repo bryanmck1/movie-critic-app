@@ -1,57 +1,30 @@
 <div id="pageContainer" class="min-h-screen flex flex-col items-center">
-
   <%= render partial: 'devise/shared/navbar'%>
-
-  <div class="mt-10 flex flex-col w-4/5 justify-center items-center">
-    <h3 class="font-bold text-lg w-4/5 text-center">What movie would you like to review?</h3>
-
-    <%= form_with url: new_review_path, class:"w-full flex justify-center md:inline max-w-sm", method: :get do |form| %>
-      <%= form.text_field :movie_query, class: "mt-6 rounded", placeholder: "Search Movie, Title, Director, Writer, Actors" %>
-      <button class="hidden md:inline bg-blue-600 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-       <%= form.submit 'Search' %>
-
+  <%= render partial: 'details'%>  
+  <%= form_with(model: @review, url: reviews_path, class:"w-4/5 max-w-4xl flex flex-col justify-center mt-7 mb-20") do |form| %>
+    <%= form.label :review, class:"font-semibold" %> 
+    <%= form.text_area :review, class: "rounded h-52", :required => true %>
+    <%= form.label :score, class:"mt-3 font-semibold" %> 
+    <%= form.text_field :score, class: "rounded w-12", :required => true %>
+    <%= form.hidden_field :title, value: @result['Title'] %>
+    <%= form.hidden_field :poster, value: @result['Poster'] %>
+    <%= form.hidden_field :year, value: @result['Year'] %>
+    <%= form.hidden_field :runtime, value: @result['Runtime'] %>
+    <%= form.hidden_field :imdbRating, value: @result['imdbRating'] %>
+    <%= form.hidden_field :imdbID, value: @result['imdbID'] %>
+    <%= form.hidden_field :genre, value: @result['Genre'] %>
+    <%= form.hidden_field :director, value: @result['Director'] %>
+    <%= form.hidden_field :writer, value: @result['Writer'] %>
+    <%= form.hidden_field :actors, value: @result['Actors'] %>
+    <%= form.hidden_field :awards, value: @result['Awards'] %>
+    <%= form.hidden_field :summary, value: @result['Plot'] %>
+    <div class="flex w-full mt-5">
+      <button class="w-24 mr-5 bg-green-500 hover:bg-white text-white hover:text-green-500 border-2 border-green-500 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <%= form.submit 'Save' %>
       </button>
-    <% end %>
-
-  </div>
-
-  <div id="results" class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-  <% if @results.present? %>
-    <% @results.each do |result| %>
-      <div id="individualMovieContainer" class="flex flex-col items-center">
-        <div class="h-full w-44 flex flex-col justify-between rounded-lg shadow-md">
-          <% if result['Poster'] == 'N/A'%>
-            <img src="/noimg.png" alt="No image" class="w-full h-48 object-contain rounded-t-lg">
-          <% else %>
-            <img src="<%= result['Poster'] %>" alt="No poster available" class="w-full h-48 object-contain rounded-t-lg">
-          <% end %>
-          
-          <div class="p-4 flex flex-col items-center">
-            <div class="font-semibold text-sm text-center mb-2">
-              <%= result['Title'] %>
-            </div>
-            
-            <% if Review.exists?(imdb_id: result['imdbID']) %>
-            <div>
-              <button class="hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white hover:border-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                <%= link_to 'E', '#' %>
-              </button>
-              <button class="hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white hover:border-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                <%= link_to 'D', '#' %>
-              </button>
-            </div>
-            <% else %>
-              <button class="hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white hover:border-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                <%= link_to 'Review', '#' %>
-              </button>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+      <button onclick="window.history.back();" class="w-24 bg-red-600 hover:bg-white text-white hover:text-red-600 border-2 border-red-600 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        Cancel
+      </button>
+    </div>
   <% end %>
-</div>
-
-
-  
 </div>

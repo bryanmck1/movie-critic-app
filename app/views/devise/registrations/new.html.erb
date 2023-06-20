@@ -1,38 +1,33 @@
 <div id="pageContainer" class="min-h-screen flex flex-col justify-center items-center">
-
   <h1 class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium mb-10" >The Movie Critic</h1>
-  <h5 class="text-xl lg:text-2xl mb-1 md:mb-3">Sign Up Form</h5>
-
+  <h5 class="text-xl font-semibold lg:text-2xl mb-1 md:mb-3">Sign Up</h5>
   <div id="signUpForm" class="flex flex-col justify-center items-center md:border-2 md:border-slate-300 p-5 w-4/5 max-w-2xl">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div id="firstAndLastName" class="md:flex md:flex-row w-full">
         <div class="field mb-3 md:mr-1">
-          <%= f.label :first_name, class: "text-sm font-bold" %><br />
+          <label for="first_name", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">First Name</label><br>
           <%= f.text_field :first_name, placeholder: "Bruce", class: "rounded-md border-slate-500" %>
         </div>
         <div class="field mb-3 md:ml-1">
-          <%= f.label :last_name, class: "text-sm font-bold" %><br />
-          <%= f.text_field :last_name, placeholder: "Wayne", class: "rounded-md border-slate-500" %>
+          <label for="last_name", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Last Name</label><br>
+          <%= f.text_field :last_name, placeholder:"Wayne", class: "rounded-md border-slate-500" %>
         </div>
       </div>
       <div class="field mb-3">
-        <%= f.label :email, class: "text-sm font-bold" %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "batman@gothamcity.com", class: "rounded-md border-slate-500 w-full" %>
+        <label for="email", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Email</label><br>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"batman@gotham.com", class: "rounded-md border-slate-500 w-full" %>
       </div>
       <div class="field mb-3">
-        <%= f.label :username, class: "text-sm font-bold" %><br />
+        <label for="username", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Username</label><br>
         <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: "TheDarkKnight", class: "rounded-md border-slate-500 w-full" %>
       </div>
       <div class="field mb-3">
-        <%= f.label :password, class: "text-sm font-bold" %>
-        <% if @minimum_password_length %>
-          <em class="text-sm">(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br />
+        <label for="password", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Password</label><br>
         <%= f.password_field :password, autocomplete: "new-password", class: "rounded-md border-slate-500 w-full" %>
       </div>
       <div class="field mb-3">
-        <%= f.label :password_confirmation, class: "text-sm font-bold" %><br />
+        <label for="password_confirmation", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Password confirmation</label><br>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "rounded-md border-slate-500 w-full" %>
       </div>
       <div class="actions flex items-center justify-around mt-4">
@@ -42,15 +37,10 @@
       </div>
     <% end %>
   </div>  
-
   <%- if controller_name != 'sessions' %>
     <div class="flex flex-col justify-center items-center text-lg lg:text-xl w-3/5 max-w-xs md:mt-3">
       <h3>Already have an account?</h3>
       <%= link_to "Sign in", new_session_path(resource_name), class: "w-4/5 mt-2 mx-10 text-center bg-white hover:bg-blue-700 border-2 rounded-md font-medium border-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
     </div>
   <% end %>
-
 </div>
-
-  
-  
