@@ -37,7 +37,7 @@
           <div class="flex justify-between md:hidden text-sm bg-gray-300 px-2 py-3 mt-3">
             <span class="font-bold">Reviewer Options</span>
             <div>
-              <%= link_to 'Edit', '#', class:"py-1 px-4 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
+              <%= link_to 'Edit', edit_review_path(@review.id), class:"py-1 px-4 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
               <%= link_to 'Delete', '#', class:"py-1 px-4 hover:text-white hover:bg-red-500 text-red-500 rounded-md border-2 border-red-500 bg-white"%>
             </div>
           </div>
@@ -53,10 +53,10 @@
       </div>
     </div>
     <% if user_signed_in? && current_user.role == "admin"%>
-      <div class="hidden md:flex justify-between text-sm bg-gray-300 px-4 py-4 mt-4 w-full max-w-6xl">
+      <div class="hidden md:flex justify-between text-sm bg-zinc-100 px-4 py-4 mt-4 w-full max-w-6xl">
         <span class="font-bold">Reviewer Options</span>
         <div>
-          <%= link_to 'Edit', '#', class:"py-1 px-4 mx-2 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
+          <%= link_to 'Edit', edit_review_path(@review.id), class:"py-1 px-4 mx-2 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
           <%= link_to 'Delete', '#', class:"py-1 mx-2 px-4 hover:text-white hover:bg-red-500 text-red-500 rounded-md border-2 border-red-500 bg-white"%>
         </div>
       </div>
@@ -65,7 +65,7 @@
      <h3 class="text-base font-bold mb-2">Critic Review</h3>
      <p><%= @review.review_summary%></p>
    </div>
-   <div class="hidden md:flex md:justify-between w-full max-w-6xl text-lg border-2 border-black bg-gray-300 mt-5 md:mt-10 mb-10 p-3">
+   <div class="hidden md:flex md:justify-between w-full max-w-6xl text-lg bg-zinc-100 mt-5 md:mt-10 mb-10 p-3">
      <span>Critic Score</span>
      <span><%= @review.review_score%>/10</span>
    </div>   

@@ -5,7 +5,7 @@
     <%= form.label :review, class:"font-semibold" %> 
     <%= form.text_area :review, class: "rounded h-52", :required => true %>
     <%= form.label :score, class:"mt-3 font-semibold" %> 
-    <%= form.text_field :score, class: "rounded w-12", :required => true %>
+    <%= form.number_field :score, class: "rounded w-16", :required => true, value: @review.review_score, min: 0, max: 10  %>
     <%= form.hidden_field :title, value: @result['Title'] %>
     <%= form.hidden_field :poster, value: @result['Poster'] %>
     <%= form.hidden_field :year, value: @result['Year'] %>

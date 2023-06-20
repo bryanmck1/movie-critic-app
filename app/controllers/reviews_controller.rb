@@ -11,6 +11,16 @@ class ReviewsController < ApplicationController
   end
 
   def edit
+    @review = Review.find(params[:id])
+  end
+
+  def update
+    @review = Review.find(params[:id])
+    @review.review_score = params[:review][:score]
+    @review.review_summary = params[:review][:review]
+    if @review.save 
+      redirect_to review_path(@review)
+    end
   end
 
   def create 

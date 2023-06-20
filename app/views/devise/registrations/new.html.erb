@@ -5,29 +5,29 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div id="firstAndLastName" class="md:flex md:flex-row w-full">
-        <div class="field mb-3 md:mr-1">
-          <label for="first_name", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">First Name</label><br>
+        <div class="group field mb-3 md:mr-1">
+          <label for="first_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">First Name</label><br>
           <%= f.text_field :first_name, placeholder: "Bruce", class: "rounded-md border-slate-500" %>
         </div>
-        <div class="field mb-3 md:ml-1">
-          <label for="last_name", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Last Name</label><br>
+        <div class="group field mb-3 md:ml-1">
+          <label for="last_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Last Name</label><br>
           <%= f.text_field :last_name, placeholder:"Wayne", class: "rounded-md border-slate-500" %>
         </div>
       </div>
-      <div class="field mb-3">
-        <label for="email", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Email</label><br>
+      <div class="group field mb-3">
+        <label for="email", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Email</label><br>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"batman@gotham.com", class: "rounded-md border-slate-500 w-full" %>
       </div>
-      <div class="field mb-3">
-        <label for="username", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Username</label><br>
+      <div class="group field mb-3">
+        <label for="username", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Username</label><br>
         <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: "TheDarkKnight", class: "rounded-md border-slate-500 w-full" %>
       </div>
-      <div class="field mb-3">
-        <label for="password", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Password</label><br>
+      <div class="group field mb-3">
+        <label for="password", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Password</label><br>
         <%= f.password_field :password, autocomplete: "new-password", class: "rounded-md border-slate-500 w-full" %>
       </div>
-      <div class="field mb-3">
-        <label for="password_confirmation", class="text-sm font-bold absolute ml-3 mt-3 pt- px-1 bg-white">Password confirmation</label><br>
+      <div class="group field mb-3">
+        <label for="password_confirmation", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Password confirmation</label><br>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "rounded-md border-slate-500 w-full" %>
       </div>
       <div class="actions flex items-center justify-around mt-4">
