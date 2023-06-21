@@ -4,7 +4,7 @@
     <div class="md:hidden flex justify-between items-center w-full max-w-xl"> 
       <h1 class="font-semibold text-xl self-start max-w-xs"><%= @review.movie_title %></h1>     
     </div> 
-    <div class="flex flex-col md:flex-row md:justify-start w-4/5 max-w-4xl">
+    <div class="flex flex-col md:flex-row md:justify-start w-4/5 max-w-4x">
       <img src="<%= @review.movie_poster %>" class="mt-7 md:mt-0 object-contain h-72 rounded-t-lg">
       <div id="movie-details" class="text-sm max-h-80 w-full mt-3 md:mt-0 md:flex md:flex-col md:justify-between md:ml-5">
         <h1 class="hidden md:inline font-semibold text-xl self-start max-w-xs"><%= @review.movie_title%></h1>     
@@ -31,43 +31,37 @@
         </div>
         <div class="flex flex-col mt-5 md:mt-0">
           <span class="font-bold">Summary</span>
-          <p class="pl-1 md:pl-0"><%= @review.plot_summary %></p>
-        </div>
-        <% if user_signed_in? && current_user.role == "admin"%>
-          <div class="flex justify-between md:hidden text-sm bg-gray-300 px-2 py-3 mt-3">
-            <span class="font-bold">Reviewer Options</span>
-            <div>
-              <%= link_to 'Edit', edit_review_path(@review.id), class:"py-1 px-4 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
-              <%= link_to 'Delete', '#', class:"py-1 px-4 hover:text-white hover:bg-red-500 text-red-500 rounded-md border-2 border-red-500 bg-white"%>
-            </div>
-          </div>
-        <% end %>
-        <div class="flex flex-col mt-5 md:hidden">
-          <h3 class="text-base font-bold mb-2">Critic Review</h3>
-          <p class="pl-1"><%= @review.review_summary%></p>
-        </div>
-        <div class="flex justify-between border-2 border-black bg-gray-300 mt-5 mb-20 p-3 md:hidden">
-          <span>Critic Score</span>
-          <span><%= @review.review_score %>/10</span>
+          <p class="md:pl-0"><%= @review.plot_summary %></p>
         </div>
       </div>
     </div>
-    <% if user_signed_in? && current_user.role == "admin"%>
-      <div class="hidden md:flex justify-between text-sm bg-zinc-100 px-4 py-4 mt-4 w-full max-w-6xl">
-        <span class="font-bold">Reviewer Options</span>
-        <div>
-          <%= link_to 'Edit', edit_review_path(@review.id), class:"py-1 px-4 mx-2 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
-          <%= link_to 'Delete', '#', class:"py-1 mx-2 px-4 hover:text-white hover:bg-red-500 text-red-500 rounded-md border-2 border-red-500 bg-white"%>
+    <div id="criticDetails" class="w-full max-w-5xl mt-3">
+       <% if user_signed_in? && current_user.role == "admin"%>
+          <div class="flex justify-between text-sm bg-gray-300 px-2 py-3">
+            <span class="font-bold">Reviewer Options</span>
+            <div>
+              <%= link_to 'Edit', edit_review_path(@review.id), class:"py-1 px-4 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
+              <span id="review-delete", class="py-1 px-4 hover:text-white hover:cursor-pointer hover:bg-red-500 text-red-500 rounded-md border-2 border-red-500 bg-white">Delete</span>
+            </div>
+          </div>
+        <% end %>
+        <div class="mt-5">
+          <h3 class="text-base font-bold mb-2">Critic Review</h3>
+          <p class="pl-1"><%= @review.review_summary%></p>
         </div>
-      </div>
-    <% end %>
-   <div class="mt-5 md:mt-10 p-3 hidden md:block w-full max-w-6xl">
-     <h3 class="text-base font-bold mb-2">Critic Review</h3>
-     <p><%= @review.review_summary%></p>
-   </div>
-   <div class="hidden md:flex md:justify-between w-full max-w-6xl text-lg bg-zinc-100 mt-5 md:mt-10 mb-10 p-3">
-     <span>Critic Score</span>
-     <span><%= @review.review_score%>/10</span>
-   </div>   
+        <div class="flex justify-between bg-gray-300 mt-5 mb-20 p-3">
+          <span>Critic Score mobile</span>
+          <span><%= @review.review_score %>/10</span>
+        </div>
+    </div>
   </div>
+  <div id="delete-modal" class="hidden fixed bg-opacity-75 bg-zinc-200 border-2 border-black h-screen w-screen flex justify-center items-center">
+    <div class="border-2 border-black bg-white w-3/4 max-w-xl h-auto flex flex-col justify-center items-center p-5">
+      <h4 class="font-bold text-center">Delete Review for <%= @review.movie_title %>?</h4>
+      <div class="mt-3">
+        <%= link_to 'Delete', review_path(@review), data: {turbo_method: :delete}, class:"w-20 mx-3 text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+        <span id="cancel-modal" class="w-20 mx-3 text-center hover:cursor-pointer text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</span>
+      </div>
+    </div>
+  </div> 
 </div>

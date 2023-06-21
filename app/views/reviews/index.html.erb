@@ -2,8 +2,8 @@
   <%= render partial: 'devise/shared/navbar'%>
   <div class="w-full flex flex-col items-center">
     <div id="form" class="mt-5 w-full flex items-center">
-      <%= form_with url: new_review_path, class:"w-full flex justify-center", method: :get do |form| %>
-        <%= form.text_field :movie_query, class: "text-sm rounded w-11/12 max-w-md lg:max-w-xl", placeholder: "Search Movie, Title, Director, Writer, Actors" %>
+      <%= form_with url: search_reviews_path, class:"w-full flex justify-center", method: :get do |form| %>
+        <%= form.text_field :query, class: "text-sm rounded w-11/12 max-w-md lg:max-w-xl", placeholder: "Search Movie Title, Director, Writer, Actors, Year, Genre", value: params[:query] %>
         <button class="hidden md:inline w-32 ml-5 mr-3 text-sm bg-blue-600 border-2 border-blue-600 hover:bg-white text-white hover:text-blue-600 font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
         <%= form.submit 'Search' %>
         </button>
@@ -11,36 +11,32 @@
           Reset search
         </button>
       <% end %>   
-    </div>
-    <div id="results" class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-      <% if @reviews.any? %>
+    </div> 
+    <% if params[:query].present? and @search_results.present?%>
+      <h2 class="text-lg font-bold mt-5">Showing results for "<%= params[:query]%>"</h2>
+    <% elsif params[:query].present? and  @search_results.present? == false %>
+      <h2 class="text-lg font-bold mt-5">No results found for "<%= params[:query]%>"</h2>
+    <% end %>
+    <div id="reviewLibrary" class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+      <% if @reviews.any? and params[:query].present? == false  %>
         <% @reviews.each do |review| %>
-          <div id="individualMovieContainer" class="flex flex-col items-center">
-            <div class="h-full p-3 w-60 flex flex-col justify-between items-center rounded-lg shadow-md">
-              <% if review.movie_poster == 'N/A'%>
-                <%= link_to review_path(review.id) do %>
-                  <img src="/noimg.png" alt="No image" class="w-full h-60 object-contain rounded-t-lg">
-                <% end %>
-              <% else %>
-                <%= link_to review_path(review.id) do %>
-                  <img src="<%= review.movie_poster %>" alt="No poster available" class="w-full h-60 object-contain rounded-t-lg">
-                <% end %>
-              <% end %>      
-              <div class="font-semibold text-base text-center mb-2">
-                <%= review.movie_title %>
+          <%= render partial: 'library', locals: { review: review }%>
+          <div id="delete-modal" class="hidden mt-14 top-0 left-0 fixed bg-opacity-75 bg-zinc-200 h-screen w-screen flex justify-center items-center">
+            <div class="border-2 border-black bg-white w-3/4 max-w-xl h-auto flex flex-col justify-center items-center p-5">
+              <h4 class="font-bold text-center">Delete Review for <%= review.movie_title %>?</h4>
+              <div class="mt-3">
+                <%= link_to 'Delete', review_path(review.id), data: {turbo_method: :delete}, class:"w-20 mx-3 text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+                <span id="cancel-modal" class="w-20 mx-3 text-center hover:cursor-pointer text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</span>
               </div>
-              <div class="text-sm text-center mb-2">
-                <%= "#{review.review_score} / 10"%>
-              </div>
-              <% if current_user.role == "admin"%>
-                <div class="flex justify-center w-full">
-                  <%= link_to 'Edit', edit_review_path(review), class:"w-20 mx-3 text-center text-xs text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-                  <%= link_to 'Delete', '#', class:"w-20 mx-3 text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-                </div>           
-              <% end %>          
             </div>
-          </div>       
-        <% end %>         
+          </div> 
+        <% end %> 
+      <% elsif params[:query].present? %>
+        <% if @search_results.present? %>
+          <% @search_results.each do |review| %>
+            <%= render partial: 'library', locals: { review: review }%>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
     <% if @reviews.any? == false %>

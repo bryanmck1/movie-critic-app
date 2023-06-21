@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_17_174651) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_21_132402) do
   create_table "reviews", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -18,7 +18,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_174651) do
     t.string "movie_title"
     t.string "director"
     t.string "writer"
-    t.string "genre"
     t.string "runtime"
     t.string "awards"
     t.string "rating"
@@ -28,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_174651) do
     t.integer "release_year"
     t.json "actors", default: []
     t.string "imdb_id"
+    t.string "genre"
   end
 
   create_table "users", force: :cascade do |t|

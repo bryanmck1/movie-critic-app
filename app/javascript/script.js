@@ -28,3 +28,23 @@ document.addEventListener("turbo:load", function () {
     toggleBtn.classList.toggle("rotate-180");
   });
 });
+
+// Shows modal to delete a review
+document.addEventListener("turbo:load", function () {
+  const deleteBtn = document.querySelector("#review-delete");
+  const deleteModal = document.querySelector("#delete-modal");
+
+  deleteBtn.addEventListener("click", function () {
+    deleteModal.classList.toggle("hidden");
+  });
+});
+
+// Removes modal when user cancels a review deletion
+document.addEventListener("turbo:load", function () {
+  const cancelBtn = document.querySelector("#cancel-modal");
+  const deleteModal = document.querySelector("#delete-modal");
+
+  cancelBtn.addEventListener("click", function () {
+    deleteModal.classList.toggle("hidden");
+  });
+});

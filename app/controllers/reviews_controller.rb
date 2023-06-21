@@ -1,13 +1,31 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user, only: [:index] 
-  before_action :check_admin, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authorize_user, only: [:index, :search] 
+  before_action :check_admin, only: [:new, :create, :edit, :update, :destroy, :search]
 
   require 'http'
-  require 'json'
+  require 'json' 
   
   def index
     @reviews = Review.all
+    puts params[:query]
+  end
+
+  def search
+    @reviews = Review.all
+    # query = params[:query].squeeze(' ')
+    # query = params[:query]..gsub(/\s+/, ' ')
+    query = params[:query]
+    @search_results = Review.where("movie_title LIKE :query OR director LIKE :query OR release_year LIKE :query OR actors LIKE :query OR genre LIKE :query", query: "%#{query}%")
+    render :index 
+  end
+
+  def destroy
+    @review = Review.find(params[:id])
+    @review.destroy 
+    if @review.destroy 
+      redirect_to reviews_path
+    end
   end
 
   def edit

@@ -1,0 +1,25 @@
+<div id="individualMovieContainer" class="flex flex-col items-center">
+  <div class="h-full p-3 w-60 flex flex-col justify-between items-center rounded-lg shadow-md">
+    <% if review.movie_poster == 'N/A'%>
+      <%= link_to review_path(review.id) do %>
+        <img src="/noimg.png" alt="No image" class="w-full h-60 object-contain rounded-t-lg">
+      <% end %>
+    <% else %>
+      <%= link_to review_path(review.id) do %>
+        <img src="<%= review.movie_poster %>" alt="No poster available" class="w-full h-60 object-contain rounded-t-lg">
+      <% end %>
+    <% end %>      
+    <div class="font-semibold text-base text-center mb-2">
+      <%= review.movie_title %>
+    </div>
+    <div class="text-sm text-center mb-2">
+      <%= "#{review.review_score} / 10"%>
+    </div>
+    <% if current_user.role == "admin"%>
+      <div class="flex justify-center w-full">
+        <%= link_to 'Edit', edit_review_path(review), class:"w-20 mx-3 text-center text-xs text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+        <span id="review-delete" class="w-20 mx-3 hover:cursor-pointer text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete</span>
+      </div>           
+    <% end %>          
+  </div>
+</div>

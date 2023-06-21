@@ -6,7 +6,6 @@ class MoviesController < ApplicationController
 
   def new
     @reviews = Review.all 
-   
     if params[:movie_query].present? 
       movie = params[:movie_query] 
       api_key = "d76f5007"
@@ -27,5 +26,4 @@ class MoviesController < ApplicationController
       redirect_to user_path(current_user)
     end
   end
-
 end
