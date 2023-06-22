@@ -11,48 +11,43 @@ class ReviewsController < ApplicationController
   end
 
   def filter 
-    # filter_reviews_path
-    @reviews = Review.all 
+    @reviews = Review.all  
+    @search_results = []
 
-    puts params
     if params[:release_year].present?
-      @search_results = @reviews.where(release_year: params[:release_year])
+      puts params[:release_year]
+      @search_results << Review.where(release_year: params[:release_year])
     end
 
     if params[:genre].present?
-      @search_results = @reviews.where(genre: params[:genre])
+      #genre = params[:genre].join(", ")
+      #genre = params[:genre]
+      #puts genre
+      # @search_results << Review.where("(genre) LIKE ?", "%#{genre}%")
+      @search_results << Review.where(genre: params[:genre].flatten)
+      puts "ABOVE"
+      #puts @search_results
+      puts params[:genre].flatten
+      puts params[:genre]
+      puts "BELOW"
     end
 
     if params[:rating].present?
-      @search_results = @reviews.where(rating: params[:rating])
+      @search_results << Review.where(rating: params[:rating])
     end
 
     if params[:review_score].present?
-      @search_results = @reviews.where(review_score: params[:review_score])
+      @search_results << Review.where(review_score: params[:review_score])
     end
 
-        @params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rating].present? or params[:review_score].present?
-
-    
-    #@reviews = Review.where("release_year = ? OR genre = ? OR rating = ? OR review_score = ?", params[:release_year], params[:genre], params[:rating], params[:review_score])
-    
-
-    #puts params_exist  
-    # if @params_exist == true 
-    #   @search_results = @reviews.where(review_score: params[:review_score], release_year: params[:release_year], genre: params[:genre], rating: params[:rating])
-    # end
-
-    #@params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rating].present? or params[:review_score].present?
-
-    if @params_exist == true 
-      puts "YES"
-    end
+    @search_results = @search_results.flatten.uniq
+    @params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rating].present? or params[:review_score].present? 
+  
     render :index
   end
 
   def search
     @reviews = Review.all
-    #query = params[:query].downcase
     @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
     render :index 
   end
@@ -79,7 +74,7 @@ class ReviewsController < ApplicationController
   end
 
   def create 
-    @review = Review.create(movie_poster: params[:poster], movie_title: params[:title], director: params[:director], writer: params[:writer], genre: params[:genre], runtime: params[:runtime], awards: params[:awards], rating: params[:imdbRating], plot_summary: params[:summary], review_score: params[:score], review_summary: params[:review], release_year: params[:year], actors: params[:actors], imdb_id: params[:imdbID])
+    @review = Review.create(movie_poster: params[:poster], movie_title: params[:title], director: params[:director], writer: params[:writer], genre: params[:genre], runtime: params[:runtime], awards: params[:awards], rating: params[:rating], plot_summary: params[:summary], review_score: params[:score], review_summary: params[:review], release_year: params[:year], actors: params[:actors], imdb_id: params[:imdbID])
     if @review.save 
       redirect_to reviews_path 
     end

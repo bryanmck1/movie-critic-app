@@ -25,6 +25,8 @@ gem "devise"
 
 gem "http"
 
+gem "pry"
+
 gem "json"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]

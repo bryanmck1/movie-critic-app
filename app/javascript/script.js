@@ -48,3 +48,13 @@ document.addEventListener("turbo:load", function () {
     deleteModal.classList.toggle("hidden");
   });
 });
+
+// Shows modal to filter by release_year
+document.addEventListener("turbo:load", function () {
+  const releaseBtn = document.querySelector("#release_modal");
+  const releaseModal = document.querySelector("#release_years");
+
+  releaseBtn.addEventListener("click", function () {
+    releaseModal.classList.toggle("hidden");
+  });
+});

@@ -10,3 +10,10 @@ Things to fix:
         <%= collection_select(:review, :review_score, Review.pluck(:review_score).uniq, :to_s, :to_s, {:prompt => "Score"}, {:multiple => true}) %>
         <%= submit_tag "Filter" %>
       <% end %>
+
+                <% Review.distinct.pluck(:genre).each do |genre| %>
+            <div>
+              <%= check_box_tag 'genre[]', genre %>
+              <%= label_tag "genre_#{genre}", genre %>
+            </div>
+          <% end %>
