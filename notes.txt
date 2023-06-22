@@ -3,3 +3,10 @@ Things to fix:
   Display a better message when user requests password reset
   Fix the Profile button in the nav bar not having an event listener attached to it after going to a new page
   
+  <%= form_tag(reviews_path, method: :get, class:"text-sm w-full flex justify-center border-2 border-black") do %>
+        <%= collection_select(:review, :release_year, Review.pluck(:release_year).uniq, :to_s, :to_s, {:prompt => "Release Year"}, {:multiple => true}) %>
+        <%= collection_select(:review, :genre, Review.pluck(:genre).uniq, :to_s, :to_s, {:prompt => "Genre"}, {:multiple => true}) %>
+        <%= collection_select(:review, :rating, Review.pluck(:rating).uniq, :to_s, :to_s, {:prompt => "Rating"}, {:multiple => true}) %>
+        <%= collection_select(:review, :review_score, Review.pluck(:review_score).uniq, :to_s, :to_s, {:prompt => "Score"}, {:multiple => true}) %>
+        <%= submit_tag "Filter" %>
+      <% end %>

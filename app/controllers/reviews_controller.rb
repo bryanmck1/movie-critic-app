@@ -1,22 +1,59 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user, only: [:index, :search] 
-  before_action :check_admin, only: [:new, :create, :edit, :update, :destroy, :search]
+  before_action :check_admin, only: [:new, :create, :edit, :update, :destroy, :search, :filter]
 
   require 'http'
   require 'json' 
   
   def index
-    @reviews = Review.all
-    puts params[:query]
+    @reviews = Review.all 
+  end
+
+  def filter 
+    # filter_reviews_path
+    @reviews = Review.all 
+
+    puts params
+    if params[:release_year].present?
+      @search_results = @reviews.where(release_year: params[:release_year])
+    end
+
+    if params[:genre].present?
+      @search_results = @reviews.where(genre: params[:genre])
+    end
+
+    if params[:rating].present?
+      @search_results = @reviews.where(rating: params[:rating])
+    end
+
+    if params[:review_score].present?
+      @search_results = @reviews.where(review_score: params[:review_score])
+    end
+
+        @params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rating].present? or params[:review_score].present?
+
+    
+    #@reviews = Review.where("release_year = ? OR genre = ? OR rating = ? OR review_score = ?", params[:release_year], params[:genre], params[:rating], params[:review_score])
+    
+
+    #puts params_exist  
+    # if @params_exist == true 
+    #   @search_results = @reviews.where(review_score: params[:review_score], release_year: params[:release_year], genre: params[:genre], rating: params[:rating])
+    # end
+
+    #@params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rating].present? or params[:review_score].present?
+
+    if @params_exist == true 
+      puts "YES"
+    end
+    render :index
   end
 
   def search
     @reviews = Review.all
-    # query = params[:query].squeeze(' ')
-    # query = params[:query]..gsub(/\s+/, ' ')
-    query = params[:query]
-    @search_results = Review.where("movie_title LIKE :query OR director LIKE :query OR release_year LIKE :query OR actors LIKE :query OR genre LIKE :query", query: "%#{query}%")
+    #query = params[:query].downcase
+    @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
     render :index 
   end
 

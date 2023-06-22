@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :reviews do 
     collection do 
       get 'search'
+      get 'filter'
     end
   end
 end
