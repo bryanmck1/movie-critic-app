@@ -29,23 +29,16 @@ document.addEventListener("turbo:load", function () {
   });
 });
 
-// Shows modal to delete a review
+// Shows delete modal on index page
 document.addEventListener("turbo:load", function () {
-  const deleteBtn = document.querySelector("#review-delete");
-  const deleteModal = document.querySelector("#delete-modal");
+  const deleteBtns = document.querySelectorAll(".review-delete");
 
-  deleteBtn.addEventListener("click", function () {
-    deleteModal.classList.toggle("hidden");
-  });
-});
-
-// Removes modal when user cancels a review deletion
-document.addEventListener("turbo:load", function () {
-  const cancelBtn = document.querySelector("#cancel-modal");
-  const deleteModal = document.querySelector("#delete-modal");
-
-  cancelBtn.addEventListener("click", function () {
-    deleteModal.classList.toggle("hidden");
+  deleteBtns.forEach(function (deleteBtn) {
+    deleteBtn.addEventListener("click", function () {
+      const reviewId = deleteBtn.dataset.reviewId;
+      const modal = document.querySelector(`#modal-${reviewId}`);
+      modal.classList.toggle("hidden");
+    });
   });
 });
 

@@ -1,0 +1,54 @@
+<%= form_tag filter_reviews_path, id:"filter-form", method: :get, class:"w-full max-w-5xl flex" do %>
+  <div class="flex-1">
+    <div id="release_modal" class="hover:cursor-pointer flex justify-between border-2 border-black">
+      <h5>Release Year</h5>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+        </svg>
+      </span>
+    </div>
+    <div id="release_years" class="">
+      <% Review.distinct.pluck(:release_year).each do |year| %>
+        <div class="flex">
+          <%= check_box_tag 'release_year[]', year %><br>
+          <%= label_tag "release_year_#{year}", year %>
+        </div>
+      <% end %>
+    </div>      
+  </div>
+  <div class="flex-1 mx-3 border-2 border-black p-3">
+    <h5>Genre</h5>
+    <% genres = [] %>
+    <% Review.pluck(:genre).each do |genre| %>
+      <% genre.split(',').map(&:strip).each do |name| %>
+        <% if !genres.include?(name) %>
+          <% genres << name %>
+            <div>
+              <%= check_box_tag 'genre[]', name %>
+              <%= label_tag "genre_#{name}", name %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+  </div>
+  <div class="flex-1 border-2 border-black mx-3">
+    <h5>Rated:</h5>
+    <% Review.distinct.pluck(:rated).each do |rating| %>
+      <div>
+        <%= check_box_tag 'rated[]', rating %>
+        <%= label_tag "rated_#{rating}", rating %>
+      </div>
+    <% end %>
+  </div>
+  <div class="flex-1 border-2 border-black">
+    <h5>Review Score:</h5>
+    <% Review.distinct.pluck(:review_score).each do |score| %>
+      <div>
+        <%= check_box_tag 'review_score[]', score %>
+        <%= label_tag "review_score_#{score}", score %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<input type="submit" value="Submit" form="filter-form" class="hidden">

@@ -1,68 +1,9 @@
 <div id="pageContainer" class="min-h-screen flex flex-col flex-start items-center">
   <%= render partial: 'devise/shared/navbar'%>
   <div class="w-full flex flex-col items-center">
-    <div id="form" class="mt-5 w-full flex flex-col items-center">
-      <%= form_with url: search_reviews_path, class:"w-full max-w-5xl flex", method: :get do |form| %>
-        <%= form.text_field :query, class: "text-sm max-w-3xl rounded flex-1 ", placeholder: "Search Movie Title, Director, Writer, Actors, Year, Genre", value: params[:query] %>
-        <button class="flex-2 hidden md:inline w-32 ml-5 mr-3 text-sm bg-blue-600 border-2 border-blue-600 hover:bg-white text-white hover:text-blue-600 font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        <%= form.submit 'Search' %>
-        </button>
-        <button class="flex-2 hidden md:inline w-32 text-sm text-blue-500 border-2 border-blue-500 hover:bg-blue-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Reset search
-        </button>
-      <% end %>  
-
-      <%= form_tag filter_reviews_path, id:"filter-form", method: :get, class:"w-full max-w-5xl flex" do %>
-        <div class="flex-1">
-          <div id="release_modal" class="hover:cursor-pointer flex justify-between border-2 border-black">
-            <h5>Release Year</h5>
-            <span>V</span>
-          </div>
-          <div id="release_years" class="">
-            <% Review.distinct.pluck(:release_year).each do |year| %>
-            <div>
-              <%= check_box_tag 'release_year[]', year %><br>
-              <%= label_tag "release_year_#{year}", year %>
-            </div>
-          <% end %>
-          </div>
-          
-        </div>
-        <div class="flex-1">
-          <h5>Genre:</h5>
-          <% genres = [] %>
-          <% Review.distinct.pluck(:genre).each do |genre| %>
-            <% genre.split(',').map(&:strip).each do |name| %>
-              <% if !genres.include?(name) %>
-                <% genres << name %>
-                <div>
-                  <%= check_box_tag 'genre[]', name %>
-                  <%= label_tag "genre_#{name}", name %>
-                </div>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="flex-1">
-          <h5>Rating:</h5>
-          <% Review.distinct.pluck(:rating).each do |rating| %>
-            <div>
-              <%= check_box_tag 'rating[]', rating %>
-              <%= label_tag "rating_#{rating}", rating %>
-            </div>
-          <% end %>
-        </div>
-        <div class="flex-1 border-2 border-black">
-          <h5>Review Score:</h5>
-          <% Review.distinct.pluck(:review_score).each do |score| %>
-            <div>
-              <%= check_box_tag 'review_score[]', score %>
-              <%= label_tag "review_score_#{score}", score %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-      <input type="submit" value="Submit" form="filter-form" class="hidden">
+    <div class="mt-5 w-full flex flex-col items-center">
+      <%= render partial: 'search'%>
+      <%= render partial: 'filter'%>
     </div> 
     <% if params[:query].present? and @search_results.any?%>
       <h2 class="text-lg font-bold mt-5">Showing results for "<%= params[:query]%>"</h2>
@@ -72,16 +13,8 @@
     <div id="reviewLibrary" class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
       <% if @reviews.any? and params[:query].present? == false and @params_exist != true %>
         <% @reviews.order(:movie_title).each do |review| %>
-          <%= render partial: 'library', locals: { review: review }%>
-          <div id="delete-modal" class="hidden mt-14 top-0 left-0 fixed bg-opacity-75 bg-zinc-200 h-screen w-screen flex justify-center items-center">
-            <div class="border-2 border-black bg-white w-3/4 max-w-xl h-auto flex flex-col justify-center items-center p-5">
-              <h4 class="font-bold text-center">Delete Review for <%= review.movie_title %>?</h4>
-              <div class="mt-3">
-                <%= link_to 'Delete', review_path(review.id), data: {turbo_method: :delete}, class:"w-20 mx-3 text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-                <span id="cancel-modal" class="w-20 mx-3 text-center hover:cursor-pointer text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</span>
-              </div>
-            </div>
-          </div> 
+          <%= render partial: 'library', locals: { review: review }%>           
+          <%= render partial: 'delete', locals: { review: review }%>               
         <% end %> 
       <% elsif params[:query].present? and @search_results.any? %>
         <% @search_results.each do |review| %>
@@ -89,16 +22,13 @@
         <% end %>
       
       <% elsif @params_exist %>
-        <% @search_results.each do |review| %>
+        <% @filter.each do |review| %>
           <%= render partial: 'library', locals: { review: review }%>
         <% end %>
       <% end %>
     </div>
-
-
     <% if @reviews.any? == false %>
       <h3 class="font-bold text-center w-full">There are no reviews in the directory yet.</h3>
     <% end %> 
-    
   </div>
 </div>

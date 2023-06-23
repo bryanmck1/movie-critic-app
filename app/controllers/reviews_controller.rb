@@ -10,56 +10,31 @@ class ReviewsController < ApplicationController
     @reviews = Review.all 
   end
 
-  def filter 
-    @reviews = Review.all  
-    @search_results = []
-
-    if params[:release_year].present?
-      puts params[:release_year]
-      @search_results << Review.where(release_year: params[:release_year])
-    end
-
-    if params[:genre].present?
-      #genre = params[:genre].join(", ")
-      #genre = params[:genre]
-      #puts genre
-      # @search_results << Review.where("(genre) LIKE ?", "%#{genre}%")
-      @search_results << Review.where(genre: params[:genre].flatten)
-      puts "ABOVE"
-      #puts @search_results
-      puts params[:genre].flatten
-      puts params[:genre]
-      puts "BELOW"
-    end
-
-    if params[:rating].present?
-      @search_results << Review.where(rating: params[:rating])
-    end
-
-    if params[:review_score].present?
-      @search_results << Review.where(review_score: params[:review_score])
-    end
-
-    @search_results = @search_results.flatten.uniq
-    @params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rating].present? or params[:review_score].present? 
-  
-    render :index
+  def new   
+    if params[:imdb_id].present? 
+      movie = params[:imdb_id]
+      api_key = "d76f5007"
+      movie_api = "https://www.omdbapi.com/?apikey=#{api_key}&i=#{movie}"
+      response = HTTP.get(movie_api) 
+      json = JSON.parse(response) 
+      puts json 
+      @result = json
+    else
+      @result = []
+    end 
   end
 
-  def search
-    @reviews = Review.all
-    @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
-    render :index 
+  def create 
+    @review = Review.create(movie_poster: params[:poster], movie_title: params[:title], director: params[:director], writer: params[:writer], genre: params[:genre], runtime: params[:runtime], awards: params[:awards], rated: params[:rated], plot_summary: params[:summary], review_score: params[:score], review_summary: params[:review], release_year: params[:year], actors: params[:actors], imdb_id: params[:imdbID])
+    if @review.save 
+      redirect_to reviews_path 
+    end
   end
 
-  def destroy
+  def show
     @review = Review.find(params[:id])
-    @review.destroy 
-    if @review.destroy 
-      redirect_to reviews_path
-    end
   end
-
+  
   def edit
     @review = Review.find(params[:id])
   end
@@ -73,28 +48,47 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def create 
-    @review = Review.create(movie_poster: params[:poster], movie_title: params[:title], director: params[:director], writer: params[:writer], genre: params[:genre], runtime: params[:runtime], awards: params[:awards], rating: params[:rating], plot_summary: params[:summary], review_score: params[:score], review_summary: params[:review], release_year: params[:year], actors: params[:actors], imdb_id: params[:imdbID])
-    if @review.save 
-      redirect_to reviews_path 
+  def destroy
+    @review = Review.find(params[:id])
+    @review.destroy 
+    if @review.destroy 
+      redirect_to reviews_path
     end
   end
-  
-  def new   
-    if params[:imdb_id].present? 
-      movie = params[:imdb_id]
-      api_key = "d76f5007"
-      movie_api = "https://www.omdbapi.com/?apikey=#{api_key}&i=#{movie}"
-      response = HTTP.get(movie_api) 
-      json = JSON.parse(response)        
-      @result = json
-    else
-      @result = []
-    end 
+
+  def search
+    @reviews = Review.all
+    @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
+    render :index 
   end
 
-  def show
-    @review = Review.find(params[:id])
+  def filter 
+    @reviews = Review.all  
+    @filter = [] 
+
+    if params[:release_year].present?
+      @filter << Review.where(release_year: params[:release_year])
+    end
+
+    if params[:genre].present?
+      genres = params[:genre]  
+      query = genres.map { |genre| "genre LIKE ?" }.join(" OR ")
+      genre_conditions = genres.map { |genre| "%#{genre}%" }
+      @filter << Review.where(query, *genre_conditions)
+    end
+
+    if params[:rated].present?
+      @filter << Review.where(rated: params[:rated])
+    end
+
+    if params[:review_score].present?
+      @filter << Review.where(review_score: params[:review_score])
+    end
+
+    @filter = @filter.flatten.uniq
+    @params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rated].present? or params[:review_score].present? 
+  
+    render :index
   end
 
   private

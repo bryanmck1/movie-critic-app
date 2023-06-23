@@ -18,7 +18,7 @@
     <% if current_user.role == "admin"%>
       <div class="flex justify-center w-full">
         <%= link_to 'Edit', edit_review_path(review), class:"w-20 mx-3 text-center text-xs text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-        <span id="review-delete" class="w-20 mx-3 hover:cursor-pointer text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete</span>
+        <%= content_tag :span, 'Delete', data: { review_id: review.id }, class: 'review-delete w-20 mx-3 hover:cursor-pointer text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
       </div>           
     <% end %>          
   </div>

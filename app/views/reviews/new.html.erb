@@ -1,6 +1,6 @@
 <div id="pageContainer" class="min-h-screen flex flex-col items-center">
   <%= render partial: 'devise/shared/navbar'%>
-  <%= render partial: 'details'%>  
+  <%= render partial: 'details', locals: { movie_title: @result['Title'], poster: @result['Poster'], year: @result['Year'], runtime: @result['Runtime'], rated: @result['Rated'], genre:  @result['Genre'], director: @result['Director'], actors: @result['Actors'], awards: @result['Awards'], plot_summary: @result['Plot']  }%>  
   <%= form_with(model: @review, url: reviews_path, class:"w-4/5 max-w-4xl flex flex-col justify-center mt-7 mb-20") do |form| %>
     <%= form.label :review, class:"font-semibold" %> 
     <%= form.text_area :review, class: "rounded h-52", :required => true %>
@@ -10,7 +10,7 @@
     <%= form.hidden_field :poster, value: @result['Poster'] %>
     <%= form.hidden_field :year, value: @result['Year'] %>
     <%= form.hidden_field :runtime, value: @result['Runtime'] %>
-    <%= form.hidden_field :rating, value: @result['Rating'] %>
+    <%= form.hidden_field :rated, value: @result['Rated'] %>
     <%= form.hidden_field :imdbID, value: @result['imdbID'] %>
     <%= form.hidden_field :genre, value: @result['Genre'] %>
     <%= form.hidden_field :director, value: @result['Director'] %>

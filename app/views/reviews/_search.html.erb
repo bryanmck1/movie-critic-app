@@ -1,0 +1,9 @@
+<%= form_with url: search_reviews_path, class:"w-full max-w-5xl flex", method: :get do |form| %>
+  <%= form.text_field :query, class: "text-sm max-w-3xl rounded flex-1 ", placeholder: "Search Movie Title, Director, Writer, Actors, Year, Genre", value: params[:query] %>
+  <button class="flex-2 hidden md:inline w-32 ml-5 mr-3 text-sm bg-blue-600 border-2 border-blue-600 hover:bg-white text-white hover:text-blue-600 font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    <%= form.submit 'Search' %>
+  </button>
+  <button class="flex-2 hidden md:inline w-32 text-sm text-blue-500 border-2 border-blue-500 hover:bg-blue-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    Reset search
+  </button>
+<% end %> 

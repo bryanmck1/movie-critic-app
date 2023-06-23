@@ -1,9 +1,9 @@
 <div class="mt-7 flex flex-col w-11/12 justify-center items-center">
   <div class="md:hidden flex justify-between items-center w-full max-w-xl"> 
-    <h1 class="font-semibold text-xl self-start max-w-xs"><%= @result['Title']%></h1>     
+    <h1 class="font-semibold text-xl self-start max-w-xs"><%= movie_title %></h1>     
   </div> 
   <div class="flex flex-col md:flex-row w-4/5 max-w-4xl">
-    <img src="<%= @result['Poster'] %>" class="w-full md:w-auto mt-7 md:mt-0 h-72 md:h-80 object-contain rounded-t-lg">
+    <img src="<%= poster %>" class="w-full md:w-auto mt-7 md:mt-0 h-72 md:h-80 object-contain rounded-t-lg">
     <div class="flex md:hidden">
       <span>Movie Details</span>
       <svg id="toggle-btn" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="rotate-180 w-5 h-5">
@@ -11,31 +11,31 @@
       </svg> 
     </div>
     <div id="movie-details" class="text-sm hidden flex justify-between flex-col max-h-80 w-full mt-3 md:mt-0 md:flex md:ml-5">   
-      <h1 class="hidden md:inline font-semibold text-xl self-start max-w-xs"><%= @result['Title']%></h1>     
+      <h1 class="hidden md:inline font-semibold text-xl self-start max-w-xs"><%= movie_title %></h1>     
       <div class="text-gray-500 w-full text-sm flex justify-between md:justify-start">
-        <span class="md:mr-3"><%= @result['Year']%></span>
+        <span class="md:mr-3"><%= year %></span>
         <span class="md:mr-3">|</span>
-        <span class="md:mr-3"><%= @result['Runtime']%></span>
+        <span class="md:mr-3"><%= runtime %></span>
         <span class="md:mr-3">|</span>
-        <span class="md:mr-3"><%= @result['Rating']%></span>
+        <span class="md:mr-3"><%= rated %></span>
         <span class="md:mr-3">|</span>
-        <span class="md:mr-3"><%= @result['Genre']%></span>
+        <span class="md:mr-3"><%= genre %></span>
       </div>
       <div class="flex flex-col justify-start mt-5 md:mt-0">
         <span class="font-bold text-sm">Director</span>
-        <span><%= @result['Director']%></span>
+        <span><%= director %></span>
       </div>
       <div class="flex flex-col justify-start mt-5 md:mt-0">
         <span class="font-bold text-sm">Lead Actors</span>
-        <span><%= @result['Actors']%></span>
+        <span><%= actors %></span>
       </div>
       <div class="flex flex-col justify-start mt-5 md:mt-0">
         <span class="font-bold text-sm">Awards</span>
-        <span><%= @result['Awards']%></span>
+        <span><%= awards %></span>
       </div>
       <div class="flex flex-col justify-start mt-5 md:mt-0">
         <span class="font-bold text-sm">Summary</span>
-        <span><%= @result['Plot']%></span>
+        <span><%= plot_summary %></span>
       </div>
     </div>
   </div>

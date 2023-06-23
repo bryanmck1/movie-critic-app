@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_21_132402) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_22_180208) do
   create_table "reviews", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_132402) do
     t.string "writer"
     t.string "runtime"
     t.string "awards"
-    t.string "rating"
+    t.string "rated"
     t.string "plot_summary"
     t.integer "review_score"
     t.string "review_summary"
