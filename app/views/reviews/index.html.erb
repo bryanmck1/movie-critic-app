@@ -1,9 +1,9 @@
-<div id="pageContainer" class="min-h-screen flex flex-col flex-start items-center">
+<div class="min-h-screen flex flex-col flex-start items-center">
   <%= render partial: 'devise/shared/navbar'%>
-  <div class="w-full flex flex-col items-center">
+  <div class="w-full flex flex-col items-center top-14 md:top-20 relative">
     <div class="mt-5 w-full flex flex-col items-center">
-      <%= render partial: 'search'%>
-      <%= render partial: 'filter'%>
+      <%= render partial: 'search_form'%>
+      <%= render partial: 'filter_form'%>
     </div> 
     <% if !@reviews.any? %>
       <h2 class="font-bold mt-5 text-center w-11/12 max-w-2xl">There are no reviews in the directory yet.</h2>
@@ -13,20 +13,20 @@
       <h2 class="font-bold mt-5 text-center w-11/12 max-w-2xl">No results found for "<%= params[:query]%>"</h2>
     <% end %>
     <div class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-      <% if @reviews.any? && !params[:query].present? && @params_exist != true %>
+      <% if @reviews.any? && !params[:query].present? && !@params_exist %>
         <% @reviews.order(:movie_title).each do |review| %>
-          <%= render partial: 'library', locals: { review: review }%>           
-          <%= render partial: 'delete', locals: { review: review }%>               
+          <%= render partial: 'movie_layout', locals: { review: review }%>           
+          <%= render partial: 'delete_modal', locals: { review: review }%>               
         <% end %> 
       <% elsif params[:query].present? && @search_results.any? %>
         <% @search_results.each do |review| %>
-          <%= render partial: 'library', locals: { review: review }%>
-          <%= render partial: 'delete', locals: { review: review }%>               
+          <%= render partial: 'movie_layout', locals: { review: review }%>
+          <%= render partial: 'delete_modal', locals: { review: review }%>               
         <% end %>  
       <% elsif @params_exist %>
         <% @filter_params.each do |review| %>
-          <%= render partial: 'library', locals: { review: review }%>
-          <%= render partial: 'delete', locals: { review: review }%>               
+          <%= render partial: 'movie_layout', locals: { review: review }%>
+          <%= render partial: 'delete_modal', locals: { review: review }%>               
         <% end %>
       <% end %>
     </div>

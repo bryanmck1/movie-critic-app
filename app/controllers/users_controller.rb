@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user, only: [:show]
+  before_action :authorize_user, only: [:show, :update]
 
   def show
     if flash.now[:access_denied].present?
@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   end
 
   def reset_password
+    puts "RESET"
     @user = User.find(params[:email])
     @user.send_reset_password_instructions
   end

@@ -1,0 +1,22 @@
+<div class="flex flex-col items-center">
+  <div class="h-full p-3 w-60 flex flex-col justify-between items-center rounded-lg shadow-md">
+    <% if review.movie_poster == 'N/A'%>
+      <%= link_to review_path(review.id) do %>
+        <img src="https://i.ibb.co/xjPnHKf/360-F-400243185-BOx-ON3h9av-MUX10-Rs-Dkt3p-J8i-Qx72k-S3.jpg" alt="No image" class="w-full h-60 object-contain rounded-t-lg">
+      <% end %>
+    <% else %>
+      <%= link_to review_path(review.id) do %>
+        <img src="<%= review.movie_poster %>" alt="No poster available" class="w-full h-60 object-contain rounded-t-lg">
+      <% end %>
+    <% end %>      
+    <div class="font-semibold text-base text-center mb-2">
+      <%= review.movie_title %>
+    </div>
+    <div class="text-sm text-center mb-2">
+      <%= "#{review.review_score} / 10"%>
+    </div>
+    <% if current_user.role == "admin"%>
+      <%= render partial: 'edit_delete_btns', locals: { review: review }%>           
+    <% end %>          
+  </div>
+</div>

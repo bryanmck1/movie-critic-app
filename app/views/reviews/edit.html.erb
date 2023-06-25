@@ -1,20 +1,18 @@
-<div id="pageContainer" class="min-h-screen flex flex-col items-center">
+<div class="min-h-screen flex flex-col items-center">
   <%= render partial: 'devise/shared/navbar'%>
-  <%= render partial: 'details', locals: { movie_title: @review.movie_title, poster: @review.movie_poster, year: @review.release_year, runtime: @review.runtime, rated: @review.rated, genre: @review.genre, director: @review.director, actors: @review.actors, awards: @review.awards, plot_summary: @review.plot_summary } %>
-
-   <%= form_with(model: @review, url: review_path(@review), class:"w-4/5 max-w-4xl flex flex-col justify-center mt-7 mb-20") do |form| %>
-      <%= form.label :review, class:"font-semibold" %> 
-      <%= form.text_area :review, class: "rounded h-52", :required => true, value: @review.review_summary %>
-      <%= form.label :score, class:"mt-3 font-semibold" %> 
-      <%= form.number_field :score, class: "rounded w-16", :required => true, value: @review.review_score, min: 0, max: 10  %>
-    
-      <div class="flex w-full mt-5">
-        <button class="w-24 mr-5 bg-green-500 hover:bg-white text-white hover:text-green-500 border-2 border-green-500 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          <%= form.submit 'Update' %>
-        </button>
-        <button onclick="window.history.back();" class="w-24 bg-red-600 hover:bg-white text-white hover:text-red-600 border-2 border-red-600 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Cancel
-        </button>
-      </div>
-    <% end %>
+  <%= render partial: 'movie_details', locals: { movie_title: @review.movie_title, poster: @review.movie_poster, year: @review.release_year, runtime: @review.runtime, rated: @review.rated, genre: @review.genre, director: @review.director, actors: @review.actors, awards: @review.awards, plot_summary: @review.plot_summary } %>
+  <%= form_with(model: @review, url: review_path(@review), class:"w-4/5 max-w-4xl flex flex-col justify-center mt-7 mb-20 top-14 md:top-20 relative") do |form| %>
+    <%= form.label :review, class:"font-semibold" %> 
+    <%= form.text_area :review, class: "rounded h-52", :required => true, value: @review.review_summary %>
+    <%= form.label :score, class:"mt-3 font-semibold" %> 
+    <%= form.number_field :score, class: "rounded w-16", :required => true, value: @review.review_score, min: 0, max: 10  %>
+    <div class="flex w-full mt-5">
+      <button class="w-24 mr-5 bg-green-600 hover:bg-white text-white hover:text-green-600 border-2 border-green-600 py-1 px-4 rounded focus:outline-none focus:shadow-outline">
+        <%= form.submit 'Update' %>
+      </button>
+      <button onclick="window.history.back();" class="w-24 bg-red-600 hover:bg-white text-white hover:text-red-600 border-2 border-red-600 py-1 px-4 rounded focus:outline-none focus:shadow-outline">
+        Cancel
+      </button>
+    </div>
+  <% end %>
 </div>

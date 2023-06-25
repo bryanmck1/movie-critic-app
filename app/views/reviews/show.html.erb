@@ -1,32 +1,24 @@
 <div id="pageContainer" class="min-h-screen flex flex-col items-center">
   <%= render partial: 'devise/shared/navbar'%>
-  <%= render partial: 'details', locals: { movie_title: @review.movie_title, poster: @review.movie_poster, year: @review.release_year, runtime: @review.runtime, rated: @review.rated, genre: @review.genre, director: @review.director, actors: @review.actors, awards: @review.awards, plot_summary: @review.plot_summary } %>
-  <div id="criticDetails" class="w-11/12 max-w-5xl mt-3">
-       <% if user_signed_in? && current_user.role == "admin"%>
-          <div class="flex justify-between text-sm bg-gray-300 px-2 py-3">
-            <span class="font-bold">Reviewer Options</span>
-            <div>
-              <%= link_to 'Edit', edit_review_path(@review.id), class:"py-1 px-4 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
-              <span onclick="document.getElementById('delete-modal').classList.toggle('hidden');" class="cancel-modal review-delete py-1 px-4 hover:text-white hover:cursor-pointer hover:bg-red-500 text-red-500 rounded-md border-2 border-red-500 bg-white">Delete</span>
-            </div>
-          </div>
-        <% end %>
-        <div class="mt-5">
-          <h3 class="text-base font-bold mb-2">Critic Review</h3>
-          <p class="pl-1"><%= @review.review_summary%></p>
+  <%= render partial: 'movie_details', locals: { movie_title: @review.movie_title, poster: @review.movie_poster, year: @review.release_year, runtime: @review.runtime, rated: @review.rated, genre: @review.genre, director: @review.director, actors: @review.actors, awards: @review.awards, plot_summary: @review.plot_summary } %>
+  <div id="criticDetails" class="w-11/12 max-w-5xl mt-3 top-14 md:top-20 relative">
+    <% if user_signed_in? && current_user.role == "admin"%>
+      <div class="flex justify-between text-sm bg-gray-300 px-2 py-3">
+        <span class="font-bold">Reviewer Options</span>
+        <div>
+          <%= link_to 'Edit', edit_review_path(@review.id), class:"py-1 px-4 hover:text-white hover:bg-green-500 text-green-500 rounded-md border-2 border-green-500 bg-white"%>
+          <span onclick="document.getElementById('modal-<%= @review.id %>').classList.toggle('hidden');" class="cancel-modal review-delete py-1 px-4 hover:text-white hover:cursor-pointer hover:bg-red-500 text-red-500 rounded-md border-2 border-red-500 bg-white">Delete</span>
         </div>
-        <div class="flex justify-between bg-gray-300 mt-5 mb-20 p-3">
-          <span>Critic Score</span>
-          <span><%= @review.review_score %>/10</span>
-        </div>
-    </div>
-  <div id="delete-modal" class="hidden fixed bg-opacity-75 bg-zinc-200 border-2 border-black h-screen w-screen flex justify-center items-center">
-    <div class="border-2 border-black bg-white w-3/4 max-w-xl h-auto flex flex-col justify-center items-center p-5">
-      <h4 class="font-bold text-center">Delete Review for <%= @review.movie_title %>?</h4>
-      <div class="mt-3">
-        <%= link_to 'Delete', review_path(@review), data: {turbo_method: :delete}, class:"w-20 mx-3 text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-        <span onclick="document.getElementById('delete-modal').classList.toggle('hidden');" class="cancel-modal review-delete w-20 mx-3 text-center hover:cursor-pointer text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</span>
       </div>
+    <% end %>
+    <div class="mt-5">
+      <h3 class="text-base font-bold mb-2">Critic Review</h3>
+      <p class="pl-1"><%= @review.review_summary%></p>
     </div>
-  </div> 
+    <div class="flex justify-between bg-gray-300 mt-5 mb-20 p-3">
+      <span>Critic Score</span>
+      <span><%= @review.review_score %>/10</span>
+    </div>
+  </div>
+  <%= render partial: 'delete_modal', locals: { review: @review }%>
 </div>

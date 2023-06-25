@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user, only: [:index, :search] 
-  before_action :check_admin, only: [:new, :create, :edit, :update, :destroy, :search, :filter]
+  before_action :authorize_user, only: [:index, :search, :filter] 
+  before_action :check_admin, only: [:new, :create, :edit, :update, :destroy]
 
   require 'http'
   require 'json' 
@@ -57,6 +57,7 @@ class ReviewsController < ApplicationController
   end
 
   def search
+    puts "BATTTTT"
     @reviews = Review.all
     @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
     render :index 
