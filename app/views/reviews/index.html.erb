@@ -5,30 +5,30 @@
       <%= render partial: 'search'%>
       <%= render partial: 'filter'%>
     </div> 
-    <% if params[:query].present? and @search_results.any?%>
-      <h2 class="text-lg font-bold mt-5">Showing results for "<%= params[:query]%>"</h2>
-    <% elsif params[:query].present? and @search_results.none? %>
-      <h2 class="text-lg font-bold mt-5">No results found for "<%= params[:query]%>"</h2>
+    <% if !@reviews.any? %>
+      <h2 class="font-bold mt-5 text-center w-11/12 max-w-2xl">There are no reviews in the directory yet.</h2>
+    <% elsif params[:query].present? && @search_results.any?%>
+      <h2 class="font-bold mt-5 text-center w-11/12 max-w-2xl">Showing results for "<%= params[:query]%>"</h2>
+    <% elsif params[:query].present? && @search_results.none? %>
+      <h2 class="font-bold mt-5 text-center w-11/12 max-w-2xl">No results found for "<%= params[:query]%>"</h2>
     <% end %>
-    <div id="reviewLibrary" class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-      <% if @reviews.any? and params[:query].present? == false and @params_exist != true %>
+    <div class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+      <% if @reviews.any? && !params[:query].present? && @params_exist != true %>
         <% @reviews.order(:movie_title).each do |review| %>
           <%= render partial: 'library', locals: { review: review }%>           
           <%= render partial: 'delete', locals: { review: review }%>               
         <% end %> 
-      <% elsif params[:query].present? and @search_results.any? %>
+      <% elsif params[:query].present? && @search_results.any? %>
         <% @search_results.each do |review| %>
           <%= render partial: 'library', locals: { review: review }%>
-        <% end %>
-      
+          <%= render partial: 'delete', locals: { review: review }%>               
+        <% end %>  
       <% elsif @params_exist %>
-        <% @filter.each do |review| %>
+        <% @filter_params.each do |review| %>
           <%= render partial: 'library', locals: { review: review }%>
+          <%= render partial: 'delete', locals: { review: review }%>               
         <% end %>
       <% end %>
     </div>
-    <% if @reviews.any? == false %>
-      <h3 class="font-bold text-center w-full">There are no reviews in the directory yet.</h3>
-    <% end %> 
   </div>
-</div>
+</div> 

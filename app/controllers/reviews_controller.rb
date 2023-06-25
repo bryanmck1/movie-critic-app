@@ -64,29 +64,29 @@ class ReviewsController < ApplicationController
 
   def filter 
     @reviews = Review.all  
-    @filter = [] 
+    @filter_params = []  
 
     if params[:release_year].present?
-      @filter << Review.where(release_year: params[:release_year])
+      @filter_params << Review.where(release_year: params[:release_year])
     end
 
     if params[:genre].present?
       genres = params[:genre]  
       query = genres.map { |genre| "genre LIKE ?" }.join(" OR ")
       genre_conditions = genres.map { |genre| "%#{genre}%" }
-      @filter << Review.where(query, *genre_conditions)
+      @filter_params << Review.where(query, *genre_conditions)
     end
 
     if params[:rated].present?
-      @filter << Review.where(rated: params[:rated])
+      @filter_params << Review.where(rated: params[:rated])
     end
 
     if params[:review_score].present?
-      @filter << Review.where(review_score: params[:review_score])
+      @filter_params << Review.where(review_score: params[:review_score])
     end
 
-    @filter = @filter.flatten.uniq
-    @params_exist = true if params[:release_year].present? or params[:genre].present? or params[:rated].present? or params[:review_score].present? 
+    @filter_params = @filter_params.flatten.uniq
+    @params_exist = params[:release_year].present? || params[:genre].present? || params[:rated].present? || params[:review_score].present? 
   
     render :index
   end

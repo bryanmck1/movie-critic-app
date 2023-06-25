@@ -17,3 +17,14 @@ Things to fix:
               <%= label_tag "genre_#{genre}", genre %>
             </div>
           <% end %>
+
+<% if Review.exists?(imdb_id: result['imdbID']) %>
+              <div class="text-sm">
+                <button class="hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white hover:border-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                  <%= link_to 'Edit', '#' %>
+                </button>
+                <button class="hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white hover:border-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                  <%= link_to 'Delete', '#' %>
+                </button>
+              </div>
+              <% else %>

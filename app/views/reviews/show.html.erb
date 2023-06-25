@@ -1,7 +1,7 @@
 <div id="pageContainer" class="min-h-screen flex flex-col items-center">
   <%= render partial: 'devise/shared/navbar'%>
   <%= render partial: 'details', locals: { movie_title: @review.movie_title, poster: @review.movie_poster, year: @review.release_year, runtime: @review.runtime, rated: @review.rated, genre: @review.genre, director: @review.director, actors: @review.actors, awards: @review.awards, plot_summary: @review.plot_summary } %>
-  <div id="criticDetails" class="w-full max-w-5xl mt-3">
+  <div id="criticDetails" class="w-11/12 max-w-5xl mt-3">
        <% if user_signed_in? && current_user.role == "admin"%>
           <div class="flex justify-between text-sm bg-gray-300 px-2 py-3">
             <span class="font-bold">Reviewer Options</span>
@@ -16,7 +16,7 @@
           <p class="pl-1"><%= @review.review_summary%></p>
         </div>
         <div class="flex justify-between bg-gray-300 mt-5 mb-20 p-3">
-          <span>Critic Score mobile</span>
+          <span>Critic Score</span>
           <span><%= @review.review_score %>/10</span>
         </div>
     </div>

@@ -1,54 +1,81 @@
-<%= form_tag filter_reviews_path, id:"filter-form", method: :get, class:"w-full max-w-5xl flex" do %>
+<%= form_tag filter_reviews_path, id:"filter-form", method: :get, class:"hidden md:w-11/12 max-w-5xl md:flex mt-3 text-base" do %>
   <div class="flex-1">
-    <div id="release_modal" class="hover:cursor-pointer flex justify-between border-2 border-black">
-      <h5>Release Year</h5>
+    <div id="release_modal" class="hover:cursor-pointer bg-blue-600 hover:bg-blue-700 flex justify-center items-center rounded-lg p-2" onclick="document.getElementById('release_years').classList.toggle('hidden');" >
+      <h5 class="text-white">Release Year</h5>
       <span>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
         </svg>
       </span>
     </div>
-    <div id="release_years" class="">
-      <% Review.distinct.pluck(:release_year).each do |year| %>
-        <div class="flex">
-          <%= check_box_tag 'release_year[]', year %><br>
+    <div id="release_years" class="hidden absolute w-60 z-50 text-gray-200 bg-gray-600 border-2 border-black mt-1 p-1 max-h-52 overflow-scroll rounded-sm">
+      <% Review.distinct.order(release_year: :desc).pluck(:release_year).each do |year| %>
+        <div class="flex items-center my-1">
+          <%= check_box_tag 'release_year[]', year, false, id: "release_year_#{year}", class:"mr-3 w-4 h-4 border-gray-200 rounded focus:ring-blue-600 ring-offset-gray-700 focus:ring-offset-gray-700 bg-gray-500 border-gray-500" %><br>
           <%= label_tag "release_year_#{year}", year %>
         </div>
       <% end %>
     </div>      
   </div>
-  <div class="flex-1 mx-3 border-2 border-black p-3">
-    <h5>Genre</h5>
+  <div class="flex-1 mx-3">
+    <div id="genre_modal" class="hover:cursor-pointer bg-blue-600 hover:bg-blue-700 flex justify-center items-center rounded-lg p-2" onclick="document.getElementById('genres').classList.toggle('hidden');">
+      <h5 class="text-white">Genre</h5>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
+        </svg>
+      </span>
+    </div>
+    <div id="genres" class="hidden absolute w-60 z-50 text-gray-200 bg-gray-600 border-2 border-black mt-1 p-1 max-h-52 overflow-scroll rounded-sm">
     <% genres = [] %>
-    <% Review.pluck(:genre).each do |genre| %>
-      <% genre.split(',').map(&:strip).each do |name| %>
-        <% if !genres.include?(name) %>
-          <% genres << name %>
-            <div>
-              <%= check_box_tag 'genre[]', name %>
-              <%= label_tag "genre_#{name}", name %>
-            </div>
+      <% Review.pluck(:genre).each do |genre| %>
+        <% genre.split(',').map(&:strip).each do |name| %>
+          <% if !genres.include?(name) %>
+            <% genres << name %>
+              <div>
+                <%= check_box_tag 'genre[]', name, false, id:"genre_#{name}", class:"mr-3 w-4 h-4 border-gray-200 rounded focus:ring-blue-600 ring-offset-gray-700 focus:ring-offset-gray-700 bg-gray-500 border-gray-500"  %>
+                <%= label_tag "genre_#{name}", name %>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
+    </div> 
+  </div>
+  <div class="flex-1 mx-3">
+    <div id="rated_modal" class="hover:cursor-pointer bg-blue-600 hover:bg-blue-700 flex justify-center items-center rounded-lg p-2" onclick="document.getElementById('ratings').classList.toggle('hidden');">
+      <h5 class="text-white">Rated</h5>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
+        </svg>
+      </span>
+    </div>
+    <div id="ratings" class="hidden absolute w-60 z-50 text-gray-200 bg-gray-600 border-2 border-black mt-1 p-1 max-h-52 overflow-scroll rounded-sm">
+      <% Review.distinct.pluck(:rated).each do |rating| %>
+        <div>
+          <%= check_box_tag 'rated[]', rating, false, id: "rated_#{rating}", class:"mr-3 w-4 h-4 border-gray-200 rounded focus:ring-blue-600 ring-offset-gray-700 focus:ring-offset-gray-700 bg-gray-500 border-gray-500"  %>
+          <%= label_tag "rated_#{rating}", rating %>
+        </div>
       <% end %>
+    </div>
   </div>
-  <div class="flex-1 border-2 border-black mx-3">
-    <h5>Rated:</h5>
-    <% Review.distinct.pluck(:rated).each do |rating| %>
-      <div>
-        <%= check_box_tag 'rated[]', rating %>
-        <%= label_tag "rated_#{rating}", rating %>
-      </div>
-    <% end %>
-  </div>
-  <div class="flex-1 border-2 border-black">
-    <h5>Review Score:</h5>
-    <% Review.distinct.pluck(:review_score).each do |score| %>
-      <div>
-        <%= check_box_tag 'review_score[]', score %>
-        <%= label_tag "review_score_#{score}", score %>
-      </div>
-    <% end %>
+  <div class="flex-1">
+    <div id="scores_modal" class="hover:cursor-pointer bg-blue-600 hover:bg-blue-700 flex justify-center items-center rounded-lg p-2" onclick="document.getElementById('scores').classList.toggle('hidden');">
+      <h5 class="text-white">Review Scores</h5>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
+        </svg>
+      </span>
+    </div>
+    <div id="scores" class="hidden absolute w-60 z-50 text-gray-200 bg-gray-600 border-2 border-black mt-1 p-1 max-h-52 overflow-scroll rounded-sm">
+      <% Review.distinct.order(review_score: :desc).pluck(:review_score).each do |score| %>
+        <div>
+          <%= check_box_tag 'review_score[]', score, false, id: "rated_#{score}", class:"mr-3 w-4 h-4 border-gray-200 rounded focus:ring-blue-600 ring-offset-gray-700 focus:ring-offset-gray-700 bg-gray-500 border-gray-500" %>
+          <%= label_tag "review_score_#{score}", score %>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>
 <input type="submit" value="Submit" form="filter-form" class="hidden">

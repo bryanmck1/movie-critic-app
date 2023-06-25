@@ -43,11 +43,11 @@ document.addEventListener("turbo:load", function () {
 });
 
 // Shows modal to filter by release_year
-document.addEventListener("turbo:load", function () {
-  const releaseBtn = document.querySelector("#release_modal");
-  const releaseModal = document.querySelector("#release_years");
+// document.addEventListener("turbo:load", function () {
+//   const releaseBtn = document.querySelector("#release_modal");
+//   const releaseModal = document.querySelector("#release_years");
 
-  releaseBtn.addEventListener("click", function () {
-    releaseModal.classList.toggle("hidden");
-  });
-});
+//   releaseBtn.addEventListener("click", function () {
+//     releaseModal.classList.toggle("hidden");
+//   });
+// });
