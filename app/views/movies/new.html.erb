@@ -10,7 +10,7 @@
     <% end %>
   </div>
   <% if !params[:movie_query].blank? && (@results.nil? || !@results.any?) %>
-    <h2 class="font-bold my-5 text-center max-w-md">No results for "<%= params[:movie_query] %>"</h2>
+    <h2 class="font-bold text-lg mt-28 text-center max-w-md">No results for "<%= params[:movie_query] %>"</h2>
   <% elsif @results.any? %>
     <h2 class="font-bold text-lg mt-28 text-center max-w-md">Showing results for "<%= params[:movie_query] %>"</h2>
     <div class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">

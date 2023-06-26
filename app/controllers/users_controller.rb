@@ -9,14 +9,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def profile 
+    render 'devise/registrations/profile'  
+  end
+
   def index
   end
 
-  def reset_password
-    puts "RESET"
-    @user = User.find(params[:email])
-    @user.send_reset_password_instructions
-  end
+  # def reset_password
+  #   puts "RESET"
+  #   @user = User.find(params[:email])
+  #   @user.send_reset_password_instructions
+  # end
 
   def edit     
   end

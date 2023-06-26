@@ -1,8 +1,9 @@
 <div id="pageContainer" class="min-h-screen flex flex-col justify-center items-center">
   <img src="https://i.ibb.co/4Jv3SY7/Movie-App-Logo-1.png" alt="The Movie Critic" class="w-5/6 max-w-md mb-10" />
   
-  <% if alert.present? %>
-    <p class="alert underline text-lg mb-3 p-3"><%= alert %></p>
+  <% if alert.present? || notice.present? %>
+    <p class="alert underline text-lg mb-1 p-3 max-w-lg text-center"><%= alert %></p>
+    <p class="notice underline text-lg mb-1 p-3 max-w-lg text-center"><%= notice %></p>
   <% end %>
 
   <div id="signInForm" class="flex flex-col justify-center items-center border-2 border-slate-300 rounded-lg p-5 w-4/5 max-w-xs">
