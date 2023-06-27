@@ -56,7 +56,10 @@ class ReviewsController < ApplicationController
   def search
     @reviews = Review.all
     @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
-    render :index 
+    respond_to do |format|
+      format.turbo_stream { render :index }
+      format.html { render :index }
+    end
   end
 
   def filter 
@@ -73,7 +76,6 @@ class ReviewsController < ApplicationController
     @filter_params = @filter_params.flatten.uniq
     @params_exist = params[:release_year].present? || params[:genre].present? || params[:rated].present? || params[:review_score].present? 
     
-   
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(

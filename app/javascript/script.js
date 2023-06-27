@@ -31,6 +31,15 @@ document.addEventListener("turbo:load", function () {
   });
 });
 
+// Submits form after a user starts typing
+function submitForm(event) {
+  clearTimeout(window.formSubmitTimeout);
+
+  window.formSubmitTimeout = setTimeout(() => {
+    event.target.form.requestSubmit();
+  }, 200);
+}
+
 // Toggles content on review movie page
 document.addEventListener("turbo:load", function () {
   const toggleBtn = document.querySelector("#toggle-btn");
