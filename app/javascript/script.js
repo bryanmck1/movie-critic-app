@@ -40,6 +40,33 @@ function submitForm(event) {
   }, 200);
 }
 
+// Adds active colors to buttons on sign up/ log in
+document.addEventListener("turbo:load", function () {
+  const currentUrl = window.location.href;
+
+  if (
+    currentUrl === "http://localhost:3000/" ||
+    currentUrl === "http://localhost:3000/users/sign_in"
+  ) {
+    console.log("YES");
+    const loginBtn = document.getElementById("loginBtn");
+    loginBtn.classList.toggle("bg-blue-500");
+    loginBtn.classList.remove("bg-white");
+  } else if (currentUrl === "http://localhost:3000/users/sign_up") {
+    const signUpBtn = document.getElementById("signupBtn");
+    signUpBtn.classList.toggle("bg-blue-500");
+    signUpBtn.classList.toggle("bg-white");
+  }
+});
+
+// Resets forms in search review page
+function resetForms() {
+  const checkboxesForm = document.getElementById("filter-form");
+  checkboxesForm.reset();
+  const searchForm = document.getElementById("search-input");
+  searchForm.reset();
+}
+
 // Toggles content on review movie page
 document.addEventListener("turbo:load", function () {
   const toggleBtn = document.querySelector("#toggle-btn");
@@ -63,13 +90,3 @@ document.addEventListener("turbo:load", function () {
     });
   });
 });
-
-// Shows modal to filter by release_year
-// document.addEventListener("turbo:load", function () {
-//   const releaseBtn = document.querySelector("#release_modal");
-//   const releaseModal = document.querySelector("#release_years");
-
-//   releaseBtn.addEventListener("click", function () {
-//     releaseModal.classList.toggle("hidden");
-//   });
-// });

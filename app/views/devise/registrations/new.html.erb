@@ -1,17 +1,26 @@
 <div id="pageContainer" class="min-h-screen flex flex-col justify-center items-center">
-  <h1 class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium mb-10" >The Movie Critic</h1>
-  <h5 class="text-xl font-semibold lg:text-2xl mb-1 md:mb-3">Sign Up</h5>
-  <div id="signUpForm" class="flex flex-col justify-center items-center md:border-2 md:border-slate-300 p-5 w-4/5 max-w-2xl">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <div class="absolute top-24 w-5/6 w-md flex justify-center">
+    <img src="https://i.ibb.co/4Jv3SY7/Movie-App-Logo-1.png" alt="The Movie Critic" class="w-5/6 max-w-md " />
+  </div>
+
+  <div id="signUpForm" class="relative top-12 md:top-3 flex flex-col justify-center items-center border-2 md:border-slate-300 p-5 w-11/12 max-w-xl">
+  <div class="flex w-full max-w-xl">
+    <%= link_to "Log In", root_path(resource_name), id:"loginBtn", class: "flex-1 w-4/5 mt-2 bg-blue-500 text-blue-500 hover:text-white text-center bg-white hover:bg-blue-700 border-2 font-sm border-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    <%= link_to "Sign Up", new_registration_path(resource_name), id:"signupBtn", class: " flex-1 w-4/5 mt-2 text-white text-center bg-white hover:bg-blue-700 border-2 font-sm border-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
+
+
+ <div class="w-full max-w-xl">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class:"w-full") do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div id="firstAndLastName" class="md:flex md:flex-row w-full">
-        <div class="group field mb-3 md:mr-1">
+        <div class="group field mb-3 md:mr-1 w-full">
           <label for="first_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">First Name</label><br>
-          <%= f.text_field :first_name, placeholder: "Bruce", class: "rounded-md border-slate-500" %>
+          <%= f.text_field :first_name, placeholder: "Bruce", class: "rounded-md border-slate-500 w-full" %>
         </div>
-        <div class="group field mb-3 md:ml-1">
+        <div class="group field mb-3 md:ml-1 w-full">
           <label for="last_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Last Name</label><br>
-          <%= f.text_field :last_name, placeholder:"Wayne", class: "rounded-md border-slate-500" %>
+          <%= f.text_field :last_name, placeholder:"Wayne", class: "rounded-md border-slate-500 w-full" %>
         </div>
       </div>
       <div class="group field mb-3">
@@ -31,16 +40,13 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "rounded-md border-slate-500 w-full" %>
       </div>
       <div class="actions flex items-center justify-around mt-4">
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
           <%= f.submit "Create An Account" %>
         </button>
       </div>
     <% end %>
+ </div>
+   
   </div>  
-  <%- if controller_name != 'sessions' %>
-    <div class="flex flex-col justify-center items-center text-lg lg:text-xl w-3/5 max-w-xs md:mt-3">
-      <h3>Already have an account?</h3>
-      <%= link_to "Sign in", new_session_path(resource_name), class: "w-4/5 mt-2 mx-10 text-center bg-white hover:bg-blue-700 border-2 rounded-md font-medium border-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-    </div>
-  <% end %>
+  
 </div>
