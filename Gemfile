@@ -25,6 +25,8 @@ gem "devise"
 
 gem "http"
 
+gem "dotenv-rails"
+
 gem "pry"
 
 gem "json"

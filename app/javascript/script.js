@@ -18,6 +18,19 @@ document.addEventListener("turbo:load", function () {
   });
 });
 
+// Listen's for change in checkboxes
+document.addEventListener("turbo:load", function () {
+  const checkboxes = document.querySelectorAll(
+    '#filter-form input[type="checkbox"]'
+  );
+
+  checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", function () {
+      document.getElementById("filter-form").requestSubmit();
+    });
+  });
+});
+
 // Toggles content on review movie page
 document.addEventListener("turbo:load", function () {
   const toggleBtn = document.querySelector("#toggle-btn");

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     get 'user/profile/edit' => 'registrations#profile', as: "registrations_profile_edit"
   end
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show]
   resources :movies, only: [:new]
   resources :reviews do 
     collection do 

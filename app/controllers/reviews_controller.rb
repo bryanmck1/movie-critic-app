@@ -1,6 +1,5 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user, only: [:index, :search, :filter] 
   before_action :check_admin, only: [:new, :create, :edit, :update, :destroy]
 
   require 'http'
@@ -13,12 +12,10 @@ class ReviewsController < ApplicationController
   def new   
     if params[:imdb_id].present? 
       movie = params[:imdb_id]
-      api_key = "d76f5007"
+      api_key = ENV["MOVIE_API_KEY"]
       movie_api = "https://www.omdbapi.com/?apikey=#{api_key}&i=#{movie}"
       response = HTTP.get(movie_api) 
-      json = JSON.parse(response) 
-      puts json 
-      @result = json
+      @result = JSON.parse(response)
     else
       @result = []
     end 
@@ -57,7 +54,6 @@ class ReviewsController < ApplicationController
   end
 
   def search
-    puts "BATTTTT"
     @reviews = Review.all
     @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
     render :index 
@@ -66,41 +62,31 @@ class ReviewsController < ApplicationController
   def filter 
     @reviews = Review.all  
     @filter_params = []  
-
-    if params[:release_year].present?
-      @filter_params << Review.where(release_year: params[:release_year])
-    end
-
+    @filter_params << Review.where(release_year: params[:release_year]) if params[:release_year].present?
+    @filter_params << Review.where(rated: params[:rated]) if params[:rated].present?
+    @filter_params << Review.where(review_score: params[:review_score]) if params[:review_score].present?
     if params[:genre].present?
-      genres = params[:genre]  
-      query = genres.map { |genre| "genre LIKE ?" }.join(" OR ")
-      genre_conditions = genres.map { |genre| "%#{genre}%" }
-      @filter_params << Review.where(query, *genre_conditions)
+      genres = params[:genre]
+      query = Array.new(genres.size, "genre LIKE ?").join(" OR ")
+      @filter_params << Review.where(query, *genres.map { |genre| "%#{genre}%" })
     end
-
-    if params[:rated].present?
-      @filter_params << Review.where(rated: params[:rated])
-    end
-
-    if params[:review_score].present?
-      @filter_params << Review.where(review_score: params[:review_score])
-    end
-
     @filter_params = @filter_params.flatten.uniq
     @params_exist = params[:release_year].present? || params[:genre].present? || params[:rated].present? || params[:review_score].present? 
-  
-    render :index
+    
+   
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+        'reviews_frame',
+        partial: 'movie_layout',
+        locals: { reviews: @filter_params }
+      )
+      end
+      format.html { render :index }
+    end
   end
 
   private
-
-  def authorize_user
-    unless user_signed_in?
-      flash[:access_denied] = "You must be logged in to view this page."
-      session[:access_denied_message] = flash[:access_denied]
-      redirect_to root_path
-    end
-  end
 
   def check_admin
     unless current_user.admin?
