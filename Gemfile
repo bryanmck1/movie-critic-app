@@ -21,6 +21,8 @@ gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 
+gem 'faker'
+
 gem "devise"
 
 gem "http"

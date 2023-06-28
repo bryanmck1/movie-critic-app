@@ -1,47 +1,47 @@
-<div id="pageContainer" class="min-h-screen flex flex-col justify-center items-center">
+<div id="pageContainer" class="min-h-screen flex flex-col justify-center items-center bg-slate-200">
   <div class="absolute top-24 w-5/6 w-md flex justify-center">
     <img src="https://i.ibb.co/4Jv3SY7/Movie-App-Logo-1.png" alt="The Movie Critic" class="w-5/6 max-w-md " />
   </div>
 
-  <div id="signUpForm" class="relative top-12 md:top-3 flex flex-col justify-center items-center border-2 md:border-slate-300 p-5 w-11/12 max-w-xl">
-  <div class="flex w-full max-w-xl">
-    <%= link_to "Log In", root_path(resource_name), id:"loginBtn", class: "flex-1 w-4/5 mt-2 bg-blue-500 text-blue-500 hover:text-white text-center bg-white hover:bg-blue-700 border-2 font-sm border-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-    <%= link_to "Sign Up", new_registration_path(resource_name), id:"signupBtn", class: " flex-1 w-4/5 mt-2 text-white text-center bg-white hover:bg-blue-700 border-2 font-sm border-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  <div id="signUpForm" class="relative top-12 md:top-3 flex flex-col justify-center items-center border-2 md:border-slate-300 p-5 w-11/12 max-w-xl bg-slate-100 rounded-md">
+  <div class="flex w-full max-w-xl mb-5">
+    <%= link_to "Log In", root_path(resource_name), id:"loginBtn", class: "flex-1 mr-1 w-4/5 mt-2 bg-white text-blue-500 hover:text-white text-center hover:bg-blue-700 border-2 font-sm border-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    <%= link_to "Sign Up", new_registration_path(resource_name), id:"signupBtn", class: "ml-1 flex-1 w-4/5 mt-2 text-white text-center bg-blue-500 hover:bg-blue-700 border-2 font-sm border-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
   </div>
 
 
- <div class="w-full max-w-xl">
+ <div class="w-full max-w-xl bg-slate-100">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class:"w-full") do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div id="firstAndLastName" class="md:flex md:flex-row w-full">
         <div class="group field mb-3 md:mr-1 w-full">
-          <label for="first_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">First Name</label><br>
-          <%= f.text_field :first_name, placeholder: "Bruce", class: "rounded-md border-slate-500 w-full" %>
+          <label for="first_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 z-50 px-1 bg-slate-100">First Name</label><br>
+          <%= f.text_field :first_name, placeholder: "Bruce", class: "rounded-md border-slate-500 w-full bg-slate-100", autocomplete: "off" %>
         </div>
         <div class="group field mb-3 md:ml-1 w-full">
-          <label for="last_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Last Name</label><br>
-          <%= f.text_field :last_name, placeholder:"Wayne", class: "rounded-md border-slate-500 w-full" %>
+          <label for="last_name", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-slate-100">Last Name</label><br>
+          <%= f.text_field :last_name, placeholder:"Wayne", class: "rounded-md border-slate-500 w-full bg-slate-100", autocomplete: "off" %>
         </div>
       </div>
       <div class="group field mb-3">
-        <label for="email", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Email</label><br>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"batman@gotham.com", class: "rounded-md border-slate-500 w-full" %>
+        <label for="email", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-slate-100">Email</label><br>
+        <%= f.email_field :email, autofocus: true, autocomplete: "off", placeholder:"batman@gotham.com", class: "rounded-md border-slate-500 w-full bg-slate-100" %>
       </div>
       <div class="group field mb-3">
-        <label for="username", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Username</label><br>
-        <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: "TheDarkKnight", class: "rounded-md border-slate-500 w-full" %>
+        <label for="username", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-slate-100">Username</label><br>
+        <%= f.text_field :username, autofocus: true, autocomplete: "off", placeholder: "TheDarkKnight", class: "rounded-md border-slate-500 w-full bg-slate-100" %>
       </div>
       <div class="group field mb-3">
-        <label for="password", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Password</label><br>
-        <%= f.password_field :password, autocomplete: "new-password", class: "rounded-md border-slate-500 w-full" %>
+        <label for="password", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-slate-100">Password</label><br>
+        <%= f.password_field :password, autocomplete: "off", class: "rounded-md border-slate-500 w-full bg-slate-100" %>
       </div>
       <div class="group field mb-3">
-        <label for="password_confirmation", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-white">Password confirmation</label><br>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "rounded-md border-slate-500 w-full" %>
+        <label for="password_confirmation", class="group-focus-within:mt-0 text-sm font-bold absolute ml-3 mt-3 px-1 bg-slate-100">Password confirmation</label><br>
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: "rounded-md border-slate-500 w-full bg-slate-100" %>
       </div>
-      <div class="actions flex items-center justify-around mt-4">
-        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          <%= f.submit "Create An Account" %>
+      <div class="actions flex items-center justify-around mt-4 hover:cursor-pointer">
+        <button class="w-full bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <%= f.submit "Create An Account", class:"hover:cursor-pointer" %>
         </button>
       </div>
     <% end %>

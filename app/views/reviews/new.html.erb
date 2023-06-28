@@ -1,4 +1,4 @@
-<div id="pageContainer" class="min-h-screen flex flex-col items-center">
+<div id="pageContainer" class="min-h-screen flex flex-col items-center bg-slate-200">
   <%= render partial: 'devise/shared/navbar'%>
   <%= render partial: 'movie_details', locals: { movie_title: @result['Title'], poster: @result['Poster'], year: @result['Year'], runtime: @result['Runtime'], rated: @result['Rated'], genre:  @result['Genre'], director: @result['Director'], actors: @result['Actors'], awards: @result['Awards'], plot_summary: @result['Plot']  }%>  
   <%= form_with(model: @review, url: reviews_path, class:"w-4/5 max-w-4xl flex flex-col justify-center mt-24 mb-20") do |form| %>

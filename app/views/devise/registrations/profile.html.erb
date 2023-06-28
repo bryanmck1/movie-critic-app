@@ -1,4 +1,4 @@
-<div class="min-h-screen flex flex-col items-center">
+<div class="min-h-screen flex flex-col items-centerv bg-slate-200">
   <%= render partial: 'devise/shared/navbar'%>
   <% if session[:access_denied_message] %>
     <div class="alert alert-danger">
@@ -6,31 +6,31 @@
     </div>
     <% session.delete(:access_denied_message) %>
   <% end %>
-  <div class="flex flex-col justify-center items-center text-sm md:text-base w-5/6 top-14 md:top-20 relative">
+  <div class="flex flex-col justify-center items-center text-sm top-14 md:top-20 relative">
     <h3 class="text-md font-bold m-7">Edit Account</h3>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="md:flex md:flex-row w-full">
         <div class="field my-3 md:mr-1">
           <%= f.label :first_name, class: "text-sm font-bold" %><br />
-          <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "rounded-md border-slate-500" %>
+          <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "rounded-md border-slate-500 bg-slate-100" %>
         </div>
         <div class="field my-3 md:ml-1">
           <%= f.label :last_name, class: "text-sm font-bold" %><br />
-          <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "rounded-md border-slate-500" %>
+          <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "rounded-md border-slate-500 bg-slate-100" %>
         </div>
       </div>
       <div class="field my-3">
         <%= f.label :email, class: "text-sm font-bold" %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "rounded-md border-slate-500 w-full" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "rounded-md border-slate-500 w-full bg-slate-100" %>
       </div>
       <div class="field my-3">
         <%= f.label :username, class: "text-sm font-bold" %><br />
-        <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "rounded-md border-slate-500 w-full" %>
+        <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "rounded-md border-slate-500 w-full bg-slate-100" %>
       </div>
       <div class="field my-3">
         <%= f.label :current_password, class: "text-sm font-bold" %> <i>(Required)</i><br />
-        <%= f.password_field :current_password, autocomplete: "current-password", class: "rounded-md border-slate-500 w-full" %>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "rounded-md border-slate-500 w-full bg-slate-100" %>
       </div>
       <div class="w-full flex justify-between md:justify-center mt-10 max-w-2xl">
         <%= f.submit "Save", class: "w-32 text-center bg-green-600 hover:bg-white hover:text-green-600 text-white hover:cursor-pointer border-2 border-green-600 hover:border-2 hover:border-green-600 font-normal m-1 py-2 rounded focus:outline-none focus:shadow-outline" %>    

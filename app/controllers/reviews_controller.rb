@@ -6,19 +6,15 @@ class ReviewsController < ApplicationController
   require 'json' 
   
   def index
-    @reviews = Review.all 
+    @reviews = Review.select(:id, :movie_poster, :movie_title, :review_score).as_json
+  end
+
+  def show
+    @review = Review.find(params[:id])
   end
 
   def new   
-    if params[:imdb_id].present? 
-      movie = params[:imdb_id]
-      api_key = ENV["MOVIE_API_KEY"]
-      movie_api = "https://www.omdbapi.com/?apikey=#{api_key}&i=#{movie}"
-      response = HTTP.get(movie_api) 
-      @result = JSON.parse(response)
-    else
-      @result = []
-    end 
+    @result = params[:imdb_id].present? ? JSON.parse(HTTP.get("https://www.omdbapi.com/?apikey=#{ENV['MOVIE_API_KEY']}&i=#{params[:imdb_id]}")) : []
   end
 
   def create 
@@ -27,10 +23,6 @@ class ReviewsController < ApplicationController
       redirect_to reviews_path 
     end
   end
-
-  def show
-    @review = Review.find(params[:id])
-  end
   
   def edit
     @review = Review.find(params[:id])
@@ -38,24 +30,18 @@ class ReviewsController < ApplicationController
 
   def update
     @review = Review.find(params[:id])
-    @review.review_score = params[:review][:score]
-    @review.review_summary = params[:review][:review]
-    if @review.save 
-      redirect_to review_path(@review)
-    end
+    @review.update(review_score: params[:review][:score], review_summary: params[:review][:review])
+    redirect_to review_path(@review) if @review.save
   end
 
   def destroy
     @review = Review.find(params[:id])
-    @review.destroy 
-    if @review.destroy 
-      redirect_to reviews_path
-    end
+    redirect_to reviews_path if @review.destroy
   end
 
   def search
-    @reviews = Review.all
-    @search_results = Review.where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%")
+    @reviews = Review.select(:id, :movie_poster, :movie_title, :review_score).as_json
+    @search_results = Review.select(:id, :movie_poster, :movie_title, :review_score).where("LOWER(movie_title) LIKE :query OR LOWER(release_year) LIKE :query OR LOWER(genre) LIKE :query OR LOWER(director) LIKE :query OR LOWER(writer) LIKE :query OR LOWER(actors) LIKE :query", query: "%#{params[:query].downcase.strip.squeeze(" ")}%").as_json
     respond_to do |format|
       format.turbo_stream { render :index }
       format.html { render :index }
@@ -63,27 +49,23 @@ class ReviewsController < ApplicationController
   end
 
   def filter 
-    @reviews = Review.all  
+    @reviews = Review.select(:id, :movie_poster, :movie_title, :review_score).as_json
     @filter_params = []  
-    @filter_params << Review.where(release_year: params[:release_year]) if params[:release_year].present?
-    @filter_params << Review.where(rated: params[:rated]) if params[:rated].present?
-    @filter_params << Review.where(review_score: params[:review_score]) if params[:review_score].present?
-    if params[:genre].present?
-      genres = params[:genre]
-      query = Array.new(genres.size, "genre LIKE ?").join(" OR ")
-      @filter_params << Review.where(query, *genres.map { |genre| "%#{genre}%" })
-    end
+    @filter_params << Review.select(:id, :movie_poster, :movie_title, :review_score).where(release_year: params[:release_year]).as_json if params[:release_year].present?
+    @filter_params << Review.select(:id, :movie_poster, :movie_title, :review_score).where(rated: params[:rated]).as_json if params[:rated].present?
+    @filter_params << Review.select(:id, :movie_poster, :movie_title, :review_score).where(review_score: params[:review_score]).as_json if params[:review_score].present?
+    @filter_params << Review.select(:id, :movie_poster, :movie_title, :review_score).where(Array.new(params[:genre].size, "genre LIKE ?").join(" OR "), *params[:genre].map { |genre| "%#{genre}%" }).as_json if params[:genre].present?
     @filter_params = @filter_params.flatten.uniq
     @params_exist = params[:release_year].present? || params[:genre].present? || params[:rated].present? || params[:review_score].present? 
     
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-        'reviews_frame',
-        partial: 'movie_layout',
-        locals: { reviews: @filter_params }
+          'reviews_frame',
+          partial: 'movie_layout',
+          locals: { reviews: @filter_params }
       )
-      end
+    end
       format.html { render :index }
     end
   end

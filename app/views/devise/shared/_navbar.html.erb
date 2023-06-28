@@ -1,4 +1,4 @@
-<nav class="w-full flex fixed top-0 z-50 bg-white items-center justify-between p-4 overscroll-none border-b-2 border-gray-500">
+<nav class="w-full flex fixed top-0 z-50 bg-slate-200 items-center justify-between p-4 overscroll-none border-b-2 border-gray-500">
   <%= link_to image_tag("https://i.ibb.co/4Jv3SY7/Movie-App-Logo-1.png"), reviews_path, class:"w-36 lg:w-48 max-w-sm" %>
   <div class="hidden md:flex " >
     <%= link_to 'Movie Reviews', reviews_path, class:"m-3" %><br>
@@ -7,13 +7,13 @@
      <% end %>
      <button id="account-menu" class="m-3 hover:cursor-pointer" onmouseenter="document.getElementById('user_btns').classList.remove('hidden');" 
        onmouseleave="document.getElementById('user_btns').classList.add('hidden');">Profile</button>
-    <div id="user_btns" class="profile hidden absolute bg-white border-2 border-gray-300 p-5 top-12 right-8" onmouseenter="document.getElementById('user_btns').classList.remove('hidden');" 
+    <div id="user_btns" class="profile hidden absolute bg-slate-100 border-2 border-gray-300 p-5 top-12 right-8" onmouseenter="document.getElementById('user_btns').classList.remove('hidden');" 
        onmouseleave="document.getElementById('user_btns').classList.add('hidden');">
       <%= link_to "Account", user_path(current_user), class: "m-5 hover:cursor-pointer" %><br>
       <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to log out?'}, class: "m-5 text-red-500" %>
     </div>
   </div>
-  <div class="navbar-menu hidden absolute border-2 border-gray-300 bg-white p-3 md:hidden top-12 right-10 overflow-visible">
+  <div class="navbar-menu hidden absolute border-2 border-gray-300 bg-slate-100 p-3 md:hidden top-12 right-10 overflow-visible">
     <%= link_to 'Movie Reviews', reviews_path, class:"m-8" %><br>
     <% if user_signed_in? && current_user.role == "admin"%>
       <%= link_to 'New review', new_movie_path, class: "m-8" %> <br>

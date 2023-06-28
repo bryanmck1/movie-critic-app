@@ -1,9 +1,9 @@
-<%= tag.div id: "modal-#{review.id}", class: 'delete-modal hidden mt-14 top-0 left-0 fixed bg-opacity-75 bg-zinc-200 h-screen w-screen flex justify-center items-center', data: { review_id: review.id } do %>
+<%= tag.div id:"modal-#{id}", class: 'delete-modal hidden mt-14 top-0 left-0 fixed bg-opacity-75 bg-zinc-200 h-screen w-screen flex justify-center items-center', data: { review_id: id } do %>
   <div class="border-2 border-black bg-white w-3/4 max-w-xl h-auto flex flex-col justify-center items-center p-5">
-    <h4 class="font-bold text-center">Delete Review for <%= review.movie_title %>?</h4>
+    <h4 class="font-bold text-center">Delete Review for <%= movie_title %>?</h4>
     <div class="mt-3">
-      <%= link_to 'Delete', review_path(review.id), data: {turbo_method: :delete}, class:"w-20 mx-3 text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-      <span onclick="document.getElementById('modal-<%= review.id %>').classList.toggle('hidden');" class="cancel-modal w-20 mx-3 text-center hover:cursor-pointer text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</span>
+      <%= link_to 'Delete', review_path(id), data: {turbo_method: :delete}, class:"w-20 mx-3 text-center text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+      <span onclick="document.getElementById('modal-<%= id %>').classList.toggle('hidden');" class="cancel-modal w-20 mx-3 text-center hover:cursor-pointer text-xs text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</span>
     </div>
   </div>
 <% end %>

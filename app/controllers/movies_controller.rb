@@ -6,17 +6,7 @@ class MoviesController < ApplicationController
 
   def new
     @reviews = Review.all 
-    if params[:movie_query].present? 
-      movie = params[:movie_query] 
-      api_key = ENV["MOVIE_API_KEY"]
-      #api_key = "d76f5007"
-      movie_api = "https://www.omdbapi.com/?apikey=#{api_key}&s=#{movie}"
-      response = HTTP.get(movie_api) 
-      json = JSON.parse(response)        
-      @results = json['Search']
-    else
-      @results = []
-    end 
+    @results = params[:movie_query].present? ? JSON.parse(HTTP.get("https://www.omdbapi.com/?apikey=#{ENV['MOVIE_API_KEY']}&s=#{params[:movie_query]}"))['Search'] : []
   end
 
   private 

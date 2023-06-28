@@ -1,4 +1,4 @@
-<div class="min-h-screen flex flex-col items-center">
+<div class="min-h-screen flex flex-col items-center bg-slate-200">
   <%= render partial: 'devise/shared/navbar'%>
   <%= render partial: 'movie_details', locals: { movie_title: @review.movie_title, poster: @review.movie_poster, year: @review.release_year, runtime: @review.runtime, rated: @review.rated, genre: @review.genre, director: @review.director, actors: @review.actors, awards: @review.awards, plot_summary: @review.plot_summary } %>
   <%= form_with(model: @review, url: review_path(@review), class:"w-4/5 max-w-4xl flex flex-col justify-center mt-7 mb-20 top-14 md:top-20 relative") do |form| %>

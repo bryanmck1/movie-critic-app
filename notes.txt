@@ -51,3 +51,15 @@ Things to fix:
  
     </div>
     <% end %>
+
+
+
+
+
+
+           <% reviews = params[:query].present? ? @search_results : (@params_exist ? @filter_params : @reviews) %>
+        <% reviews.sort_by! { |review| review["movie_title"] } %>
+          <% reviews.each do |review| %>
+            <%= render partial: 'movie_layout', locals: { movie_poster: review["movie_poster"], id: review["id"], movie_title: review["movie_title"], review_score: review["review_score"]  }%>           
+            <%= render partial: 'delete_modal', locals: { id: review["id"], movie_title: review["movie_title"] }%>               
+          <% end %>

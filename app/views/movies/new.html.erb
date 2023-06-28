@@ -1,11 +1,11 @@
-<div class="min-h-screen flex flex-col items-center">
+<div class="min-h-screen flex flex-col items-center bg-slate-200">
   <%= render partial: 'devise/shared/navbar'%>
   <div class="mt-10 flex flex-col w-4/5 justify-center items-center top-14 md:top-20 relative">
     <h3 class="font-bold text-lg w-4/5 text-center">What movie would you like to review?</h3>
     <%= form_with url: new_movie_path, class:"w-3/4 mt-3 flex justify-center max-w-3xl", method: :get do |form| %>
       <%= form.text_field :movie_query, class: "rounded w-full max-w-lg", placeholder: "Search for movie" %>
       <button class="hidden md:inline ml-3 bg-blue-600 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-       <%= form.submit 'Search' %>
+       <%= form.submit 'Search', class:"hover:cursor-pointer" %>
       </button>
     <% end %>
   </div>
@@ -26,10 +26,10 @@
               <%= result['Title'] %>
             </div>         
             <% if Review.exists?(imdb_id: result['imdbID']) %>
-              <%= render partial: '/reviews/edit_delete_btns', locals: { review: Review.find_by(imdb_id: result['imdbID']) } %>
-              <%= render partial: '/reviews/delete_modal', locals: { review: Review.find_by(imdb_id: result['imdbID'])  }%>
+              <%= render partial: '/reviews/edit_delete_btns', locals: { id: Review.find_by(imdb_id: result['imdbID']).id } %>
+              <%= render partial: '/reviews/delete_modal', locals: { id: Review.find_by(imdb_id: result['imdbID']).id, movie_title: result['Title'] }%>
             <% else %>
-              <button class="text-sm hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white hover:border-white font-normal py-1 px-3 rounded focus:outline-none focus:shadow-outline">
+              <button class="text-sm hover:bg-blue-700 text-blue-700 border-2 border-blue-400 hover:text-white font-normal py-1 px-3 rounded focus:outline-none focus:shadow-outline">
                 <%= link_to "Review", new_review_path(imdb_id: result['imdbID']) %>
               </button>
             <% end %>

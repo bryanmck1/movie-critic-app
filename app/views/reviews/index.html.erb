@@ -1,6 +1,6 @@
-<div class="min-h-screen flex flex-col flex-start items-center">
+<div class="min-h-screen flex flex-col flex-start items-center bg-slate-200">
   <%= render partial: 'devise/shared/navbar'%>
-  <div class="w-full flex flex-col items-center top-14 md:top-20 relative">
+  <div class="w-full flex flex-col items-center top-14 md:top-20 relative bg-slate-200">
     <div class="mt-5 w-full flex flex-col items-center">
       <%= render partial: 'search_form'%>
       <%= render partial: 'filter_form'%>
@@ -13,23 +13,13 @@
       <h2 class="font-bold mt-5 text-center w-11/12 max-w-2xl">No results found for "<%= params[:query]%>"</h2>
     <% end %>
     <%= turbo_frame_tag 'reviews_frame' do %>
-      <div class="mt-12 w-11/12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-        <% if @reviews.any? && !params[:query].present? && !@params_exist %>
-          <% @reviews.order(:movie_title).each do |review| %>
-            <%= render partial: 'movie_layout', locals: { review: review }%>           
-            <%= render partial: 'delete_modal', locals: { review: review }%>               
+      <div class="mt-12 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 bg-slate-200">
+        <% reviews = !params[:query].present? && !@params_exist ? @reviews : (params[:query].present? ? @search_results : @filter_params) %>    
+        <% reviews.sort_by! { |review| review["movie_title"] } %>
+          <% reviews.each do |review| %>
+            <%= render partial: 'movie_layout', locals: { movie_poster: review["movie_poster"], id: review["id"], movie_title: review["movie_title"], review_score: review["review_score"]  }%>           
+            <%= render partial: 'delete_modal', locals: { id: review["id"], movie_title: review["movie_title"] }%>               
           <% end %> 
-        <% elsif params[:query].present? && @search_results.any? %>
-          <% @search_results.each do |review| %>
-            <%= render partial: 'movie_layout', locals: { review: review }%>
-            <%= render partial: 'delete_modal', locals: { review: review }%>               
-          <% end %>  
-        <% elsif @params_exist %>
-          <% @filter_params.each do |review| %>
-            <%= render partial: 'movie_layout', locals: { review: review }%>
-            <%= render partial: 'delete_modal', locals: { review: review }%>               
-          <% end %>
-        <% end %>
       </div>
     <% end %>
   </div>

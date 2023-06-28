@@ -1,4 +1,4 @@
-<div id="pageContainer" class="min-h-screen flex flex-col items-center">
+<div id="pageContainer" class="min-h-screen flex flex-col items-center bg-slate-200">
   <%= render partial: 'devise/shared/navbar'%>
   <%= render partial: 'movie_details', locals: { movie_title: @review.movie_title, poster: @review.movie_poster, year: @review.release_year, runtime: @review.runtime, rated: @review.rated, genre: @review.genre, director: @review.director, actors: @review.actors, awards: @review.awards, plot_summary: @review.plot_summary } %>
   <div id="criticDetails" class="w-11/12 max-w-5xl mt-3 top-14 md:top-20 relative">
@@ -20,5 +20,5 @@
       <span><%= @review.review_score %>/10</span>
     </div>
   </div>
-  <%= render partial: 'delete_modal', locals: { review: @review }%>
+  <%= render partial: 'delete_modal', locals: { id: @review.id, movie_title: @review.movie_title }%>
 </div>
