@@ -59,15 +59,21 @@ document.addEventListener("turbo:load", function () {
   });
 });
 
+// Called from inline onclick event in each delete btn on the index page to display delete modal
+function toggleModal(deleteBtn) {
+  const reviewId = deleteBtn.dataset.reviewId;
+  const modal = document.querySelector(`#modal-${reviewId}`);
+  modal.classList.toggle("hidden");
+}
 // Shows delete modal on index page
-document.addEventListener("turbo:load", function () {
-  const deleteBtns = document.querySelectorAll(".review-delete");
+// document.addEventListener("turbo:load", function () {
+//   const deleteBtns = document.querySelectorAll(".review-delete");
 
-  deleteBtns.forEach(function (deleteBtn) {
-    deleteBtn.addEventListener("click", function () {
-      const reviewId = deleteBtn.dataset.reviewId;
-      const modal = document.querySelector(`#modal-${reviewId}`);
-      modal.classList.toggle("hidden");
-    });
-  });
-});
+//   deleteBtns.forEach(function (deleteBtn) {
+//     deleteBtn.addEventListener("click", function () {
+//       const reviewId = deleteBtn.dataset.reviewId;
+//       const modal = document.querySelector(`#modal-${reviewId}`);
+//       modal.classList.toggle("hidden");
+//     });
+//   });
+// });

@@ -63,3 +63,20 @@ Things to fix:
             <%= render partial: 'movie_layout', locals: { movie_poster: review["movie_poster"], id: review["id"], movie_title: review["movie_title"], review_score: review["review_score"]  }%>           
             <%= render partial: 'delete_modal', locals: { id: review["id"], movie_title: review["movie_title"] }%>               
           <% end %>
+
+
+
+---------------
+<%= turbo_frame_tag 'reviews_frame' do %>
+  <%= turbo_stream.append('reviews_frame') do %>
+    <div class="mt-12 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 bg-slate-200">
+      <% reviews = !params[:query].present? && !@params_exist ? @reviews : (params[:query].present? ? @search_results : @filter_params) %>
+      <% reviews.each do |review| %>
+        <%= render partial: 'movie_layout', locals: { movie_poster: review["movie_poster"], id: review["id"], movie_title: review["movie_title"], review_score: review["review_score"] } %>
+        <%= render partial: 'delete_modal', locals: { id: review["id"], movie_title: review["movie_title"] } %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+        

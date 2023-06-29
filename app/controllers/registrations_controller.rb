@@ -17,6 +17,15 @@ class RegistrationsController < Devise::RegistrationsController
       user_path(resource)
     end
 
+    rescue_from ActiveRecord::RecordNotUnique do |exception|
+    if exception.message =~ /UNIQUE constraint failed: users.username/
+      redirect_to new_user_registration_url, alert: 'Username has already been taken.'
+    else
+      # Handle other RecordNotUnique exceptions or fallback to default behavior
+      super
+    end
+  end
+
     private 
 
     def update_password?(resource)

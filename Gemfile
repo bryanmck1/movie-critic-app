@@ -25,6 +25,8 @@ gem 'faker'
 
 gem "devise"
 
+gem "pagy"
+
 gem "http"
 
 gem "dotenv-rails"

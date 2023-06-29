@@ -1,0 +1,12 @@
+<div id="filter-conditions">
+  <h3>Filter Conditions:</h3>
+  <% if filter_conditions.present? %>
+    <ul>
+      <% filter_conditions.each do |condition| %>
+        <li><%= condition %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No filters applied.</p>
+  <% end %>
+</div>

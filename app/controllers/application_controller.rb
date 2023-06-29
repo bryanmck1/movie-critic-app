@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :update_allowed_parameters, if: :devise_controller?
-
+  include Pagy::Backend
   protected
 
   def after_update_path_for(resource)
